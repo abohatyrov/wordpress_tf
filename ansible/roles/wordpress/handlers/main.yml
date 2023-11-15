@@ -1,0 +1,13 @@
+---
+- name: Restart Apache
+  service:
+    name: 'httpd'
+    state: restarted
+  become: true
+
+- name: Start and Enable Apache
+  service:
+    name: 'httpd'
+    state: started
+    enabled: yes
+  become: true

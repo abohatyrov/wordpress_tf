@@ -1,0 +1,9 @@
+---
+- name: ansible.posix
+  version: ">=1.5.4"
+
+- name: community.mysql
+  version: ">=3.7.2"
+
+- name: community.general
+  version: ">=7.1.0"

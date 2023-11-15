@@ -1,0 +1,4 @@
+---
+- import_tasks: install.yml
+- import_tasks: mysql_secure_installation.yml
+- import_tasks: database.yml

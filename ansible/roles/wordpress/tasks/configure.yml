@@ -1,0 +1,32 @@
+---
+
+- name: Extract Wordpress
+  unarchive:
+    src: https://wordpress.org/latest.tar.gz
+    dest: /var/www/html
+    remote_src: yes
+
+- name: Set up Apache VirtualHost
+  template:
+    src: "httpd.conf.j2"
+    dest: "/etc/httpd/conf/httpd.conf "
+  notify: Restart Apache
+
+# - name: Copy sample config file
+#   copy:
+#     src: /var/www/html/wordpress/wp-config-sample.php
+#     dest: /var/www/html/wordpress/wp-config.php
+#     remote_src: yes
+
+- name: Wordpress | Copy wp-config.php file content
+  template:  
+    src: wp-config.php.j2
+    dest: "/var/www/html/wordpress/wp-config.php"
+  notify:
+    - Restart Apache
+
+- name: Ensure SELinux allows web server to write to WordPress
+  seboolean:
+    name: httpd_can_network_connect_db
+    state: yes
+

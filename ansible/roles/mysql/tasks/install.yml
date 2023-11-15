@@ -1,0 +1,17 @@
+---
+- name: Update the system
+  dnf:
+    name: '*'
+    state: latest
+    exclude: kernel*
+
+- name: Install MySQL and dependencies
+  dnf:
+    name: 
+      - mysql
+      - mysql-server
+      - python3-PyMySQL
+      - python3-firewall
+    state: latest
+  notify: Start and Enable MySQL
+  

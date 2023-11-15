@@ -1,0 +1,8 @@
+---
+- name: Install Dependencies
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  loop: [ 'httpd', 'php', 'php-curl', 'php-gd', 'php-mbstring', 'php-xml', 'php-soap', 'php-intl', 'php-zip', 'php-mysqlnd' ]
+  notify:
+    - Start and Enable Apache
