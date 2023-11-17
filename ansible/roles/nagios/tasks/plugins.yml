@@ -17,8 +17,13 @@
   args:
     chdir: "/tmp/nagios-plugins-release-{{ nagios_plugins_version }}"
 
+- name: Init Nagios Plugins
+  command: "make"
+  args:
+    chdir: "/tmp/nagios-plugins-release-{{ nagios_plugins_version }}"
+
 - name: Install Nagios Plugins
-  command: "make && make install"
+  command: "make install"
   args:
     chdir: "/tmp/nagios-plugins-release-{{ nagios_plugins_version }}"
   notify:
