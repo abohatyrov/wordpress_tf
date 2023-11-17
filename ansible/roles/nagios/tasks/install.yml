@@ -1,4 +1,10 @@
 ---
+- name: Update the system
+  dnf:
+    name: '*'
+    state: latest
+    exclude: kernel*
+
 - name: Install required packages
   dnf:
     name: "{{ item }}"
@@ -21,11 +27,11 @@
 
 - name: Download Nagios Core source
   get_url:
-    url: "https://github.com/NagiosEnterprises/nagioscore/archive/nagios-{{ nagios_version }}.tar.gz"
-    dest: "/tmp/nagioscore-{{ nagios_version }}.tar.gz"
+    url: "https://github.com/NagiosEnterprises/nagioscore/releases/download/nagios-{{ nagios_version }}/nagios-{{ nagios_version }}.tar.gz"
+    dest: "/tmp/nagios-{{ nagios_version }}.tar.gz"
 
 - name: Extract Nagios Core source
   ansible.builtin.unarchive:
-    src: "/tmp/nagioscore-{{ nagios_version }}.tar.gz"
+    src: "/tmp/nagios-{{ nagios_version }}.tar.gz"
     dest: "/tmp/"
 

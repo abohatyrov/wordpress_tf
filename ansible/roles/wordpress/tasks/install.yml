@@ -1,4 +1,10 @@
 ---
+- name: Update the system
+  dnf:
+    name: '*'
+    state: latest
+    exclude: kernel*
+    
 - name: Install Dependencies
   dnf:
     name: "{{ item }}"
