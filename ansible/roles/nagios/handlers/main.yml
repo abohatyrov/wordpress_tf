@@ -1,5 +1,4 @@
----
-- name: restart nrpe
-  systemd:
-    name: nrpe
+- name: restart apache
+  service:
+    name: httpd
     state: restarted

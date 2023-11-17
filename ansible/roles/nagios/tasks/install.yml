@@ -1,0 +1,31 @@
+---
+- name: Install required packages
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - httpd
+    - php
+    - php-cli
+    - gcc
+    - glibc
+    - glibc-common
+    - gd
+    - gd-devel
+    - make
+    - net-snmp
+    - openssl
+    - perl
+    - wget
+    - unzip
+
+- name: Download Nagios Core source
+  get_url:
+    url: "https://github.com/NagiosEnterprises/nagioscore/archive/nagios-{{ nagios_version }}.tar.gz"
+    dest: "/tmp/nagioscore-{{ nagios_version }}.tar.gz"
+
+- name: Extract Nagios Core source
+  ansible.builtin.unarchive:
+    src: "/tmp/nagioscore-{{ nagios_version }}.tar.gz"
+    dest: "/tmp/"
+

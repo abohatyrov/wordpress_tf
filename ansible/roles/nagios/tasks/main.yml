@@ -1,24 +1,4 @@
 ---
-- name: Install NRPE and Nagios Plugins
-  yum:
-    name: "{{ item }}"
-    state: present
-  loop:
-    - nrpe
-    - nagios-plugins-all
-
-- name: Create NRPE configuration directory
-  file:
-    path: /etc/nrpe.d
-    state: directory
-    mode: 0755
-
-- name: Configure NRPE
-  template:
-    src: nrpe.cfg.j2
-    dest: /etc/nagios/nrpe.cfg
-    owner: root
-    group: root
-    mode: 0644
-  notify:
-    - restart nrpe
+- include_tasks: install.yml
+- include_tasks: compile.yml
+- include_tasks: configure.yml

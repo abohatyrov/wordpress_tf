@@ -1,5 +1,5 @@
 ---
-- name: Install and Launch Wordpress 
+- name: Install and Compile Nagios Core 
   hosts: wordpress
   user: ec2-user
   become: yes
@@ -7,6 +7,5 @@
     - groups_vars/all/vars.yml
 
   roles:
-    - mysql
-    - wordpress
+    - nagios
 
