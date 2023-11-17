@@ -6,3 +6,18 @@
     remote_src: yes
     validate_certs: no
     creates: "/tmp/nagios-plugins-release-{{ nagios_plugins_version }}"
+
+- name: Sutup Nagios Plugins
+  command: "./tools/setup"
+  args:
+    chdir: "/tmp/nagios-plugins-release-{{ nagios_plugins_version }}"
+
+- name: Compile Nagios Plugins
+  command: "./configure"
+  args:
+    chdir: "/tmp/nagios-plugins-release-{{ nagios_plugins_version }}"
+
+- name: Install Nagios Plugins
+  command: "make && make install"
+  args:
+    chdir: "/tmp/nagios-plugins-release-{{ nagios_plugins_version }}"
