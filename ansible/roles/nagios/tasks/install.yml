@@ -9,12 +9,12 @@
   dnf:
     name: "{{ item }}"
     state: present
-  loop: [ "httpd", "php", "php-cli", "gcc", "glibc", "glibc-common", "gd", "gd-devel", "make", "net-snmp", "openssl", "perl", "wget", "unzip", "openssl-devel" ]
+  loop: [ "httpd", "php", "php-cli", "gcc", "glibc", "glibc-common", "gd", "gd-devel", "make", "net-snmp", "openssl", "perl", "wget", "unzip", "openssl-devel", "python3-passlib" ]
 
-- name: Install passlib
-  pip:
-    name: passlib
-    executable: /usr/bin/python3
+# - name: Install passlib
+#   pip:
+#     name: passlib
+#     executable: /usr/bin/python3
 
 - name: Download and Extract Nagios Core source
   ansible.builtin.unarchive:
