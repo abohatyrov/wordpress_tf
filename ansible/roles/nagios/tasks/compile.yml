@@ -1,8 +1,6 @@
 ---
-- name: Compile and Install Nagios Core
-  command: "make all"
-  args:
-    chdir: "/tmp/nagios-{{ nagios_version }}"
+- name: Compile Nagios Core
+  command: "./configure"
 
 - name: Install Nagios Core files
   command: "make install"
@@ -13,3 +11,9 @@
   command: "make install-plugin"
   args:
     chdir: "/tmp/nagios-{{ nagios_version }}/plugins"
+
+- name: Install Nagios Core
+  command: "make all"
+  args:
+    chdir: "/tmp/nagios-{{ nagios_version }}"
+
