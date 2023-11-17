@@ -1,0 +1,67 @@
+---
+- name: Install Required Build Packages/Tools
+  yum:
+    name:
+      - gcc
+      - glibc
+      - glibc-common
+      - openssl
+      - openssl-devel
+    state: present
+
+- name: Download and Extract NRPE Source File 
+  unarchive:
+    src: "https://github.com/NagiosEnterprises/nrpe/releases/download/nrpe-{{ nrpe_version }}/nrpe-{{ nrpe_version }}.tar.gz"
+    dest: /tmp
+    remote_src: yes
+
+- name: Download and Extract NRPE Source File 
+  unarchive:
+    src: "https://github.com/nagios-plugins/nagios-plugins/releases/download/release-{{ plugin_version }}/nagios-plugins-{{ plugin_version }}.tar.gz"
+    dest: /tmp
+    remote_src: yes
+
+- name: Build and Install Nagios NRPE Agent
+  shell: |
+    ./configure --enable-command-args --with-nrpe-user=nagios --with-nrpe-group=nagios
+    make install-groups-users
+    make all
+    make install
+    make install-config
+    make install-init
+  args:
+    chdir: /tmp/nrpe-{{ nrpe_version }}
+
+- name: Build and Install Nagios NRPE Plugins
+  shell: |
+    ./configure
+    make
+    make install
+  args:
+    chdir: /tmp/nagios-plugins-{{ plugin_version }}
+
+- name: Update services file with NRPE Service Name, Port and Protocol
+  lineinfile:
+    path: /etc/services
+    line: "nrpe            5666/tcp                # NRPE Service"
+
+- name: Configure NRPE agent
+  template:
+    src: nrpe.cfg.j2
+    dest: /usr/local/nagios/etc/nrpe.cfg
+    owner: nagios
+    group: nagios
+    mode: 0644
+
+- name: Disable SSL when running NRPE Agent 
+  replace:
+    path: /usr/lib/systemd/system/nrpe.service
+    regexp: '-f$'
+    replace: '-f -n'
+
+- name: Start and Enable NRPE to run on System boot
+  systemd:
+    name: nrpe
+    daemon_reload: yes
+    state: restarted
+    enabled: true

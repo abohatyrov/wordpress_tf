@@ -1,5 +1,3 @@
 ---
-- import_playbook: wordpress.yml
 - import_playbook: nagios.yml
-- import_playbook: nrpe.yml
-
+- import_playbook: wordpress.yml
