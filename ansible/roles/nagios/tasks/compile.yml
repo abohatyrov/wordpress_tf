@@ -9,6 +9,17 @@
   args:
     chdir: "/tmp/nagios-{{ nagios_version }}"
 
+- name: Install Nagios Core users files
+  command: "make install-groups-users"
+  args:
+    chdir: "/tmp/nagios-{{ nagios_version }}"
+
+- name: Add user apache to group nagios
+  user:
+    name: apache
+    groups: nagios
+    append: yes
+
 - name: Install Nagios Core files
   command: "make install"
   args:
