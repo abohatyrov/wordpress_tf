@@ -29,7 +29,7 @@
   command: make install-daemoninit
   args:
     chdir: "/tmp/nagios-{{ nagios_version }}"
-  notify: restart httpd
+  notify: restart apache
 
 - name: Enable httpd service
   systemd:
@@ -50,4 +50,5 @@
   command: "make install-webconf"
   args:
     chdir: "/tmp/nagios-{{ nagios_version }}"
+  notify: restart apache
 
