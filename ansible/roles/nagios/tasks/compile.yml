@@ -1,8 +1,7 @@
 ---
 - name: Compile Nagios Core
-  command: "./configure"
+  command: "./configure --with-httpd-conf=/etc/httpd/conf.d"
   args:
-    with-httpd-conf: "/etc/httpd/conf.d"
     chdir: "/tmp/nagios-{{ nagios_version }}"
 
 - name: Install Nagios Core
