@@ -2,3 +2,8 @@
   service:
     name: httpd
     state: restarted
+
+- name: restart nagios
+  service:
+    name: nagios
+    state: restarted
