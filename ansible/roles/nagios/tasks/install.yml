@@ -9,7 +9,7 @@
   dnf:
     name: "{{ item }}"
     state: present
-  loop: [ "httpd", "php", "php-cli", "gcc", "glibc", "glibc-common", "gd", "gd-devel", "make", "net-snmp", "openssl", "perl", "wget", "unzip", "openssl-devel", "python3-passlib" ]
+  loop: [ "httpd", "php", "php-cli", "gcc", "glibc", "glibc-common", "gd", "gd-devel", "make", "net-snmp", "openssl", "perl", "wget", "unzip", "openssl-devel", "python-passlib" ]
 
 # - name: Install passlib
 #   pip:
