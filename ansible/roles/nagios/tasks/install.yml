@@ -14,7 +14,7 @@
 - name: Install passlib
   pip:
     name: passlib
-    executable: /usr/bin/python3
+    executable: /usr/bin/pip3
 
 - name: Download and Extract Nagios Core source
   ansible.builtin.unarchive:
