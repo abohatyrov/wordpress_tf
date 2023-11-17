@@ -25,13 +25,9 @@
     - wget
     - unzip
 
-- name: Download Nagios Core source
-  get_url:
-    url: "https://github.com/NagiosEnterprises/nagioscore/releases/download/nagios-{{ nagios_version }}/nagios-{{ nagios_version }}.tar.gz"
-    dest: "/tmp/nagios-{{ nagios_version }}.tar.gz"
-
-- name: Extract Nagios Core source
+- name: Download and Extract Nagios Core source
   ansible.builtin.unarchive:
-    src: "/tmp/nagios-{{ nagios_version }}.tar.gz"
+    src: "https://github.com/NagiosEnterprises/nagioscore/releases/download/nagios-{{ nagios_version }}/nagios-{{ nagios_version }}.tar.gz"
     dest: "/tmp/"
+    remote_src: yes
 
