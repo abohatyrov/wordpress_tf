@@ -1,0 +1,26 @@
+---
+- name: Update services file with NRPE Service Name, Port and Protocol
+  lineinfile:
+    path: /etc/services
+    line: "nrpe            5666/tcp                # NRPE Service"
+
+- name: Configure NRPE agent
+  template:
+    src: nrpe.cfg.j2
+    dest: /usr/local/nagios/etc/nrpe.cfg
+    owner: nagios
+    group: nagios
+    mode: 0644
+
+- name: Disable SSL when running NRPE Agent 
+  replace:
+    path: /usr/lib/systemd/system/nrpe.service
+    regexp: '-f$'
+    replace: '-f -n'
+
+- name: Start and Enable NRPE to run on System boot
+  systemd:
+    name: nrpe
+    daemon_reload: yes
+    state: restarted
+    enabled: true
