@@ -1,0 +1,8 @@
+---
+- name: Download and Extract Nagios Plugins
+  ansible.builtin.unarchive:
+    src: "https://github.com/nagios-plugins/nagios-plugins/archive/release-{{ nagios_plugins_version }}.tar.gz"
+    dest: "/tmp"
+    remote_src: yes
+    validate_certs: no
+    creates: "/tmp/nagios-plugins-release-{{ nagios_plugins_version }}"
