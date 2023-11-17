@@ -24,6 +24,7 @@
     - perl
     - wget
     - unzip
+    - openssl-devel
 
 - name: Download and Extract Nagios Core source
   ansible.builtin.unarchive:
