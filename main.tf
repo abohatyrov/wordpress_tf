@@ -1,104 +1,31 @@
-resource "aws_security_group" "onboarding" {
-  name = "onboarding-sg"
+module "wordpress_ec2" {
+  source = "./modules/wordpress_ec2"
 
-  ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    from_port = 80
-    to_port = 80
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    from_port = 443
-    to_port = 443
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    from_port = 3306
-    to_port = 3306
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  instance_name = "wordpress-instance-1"
+  ami = "ami-05a5f6298acdb05b6"
+  instance_type = "t2.micro"
 
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  sg_name = "wordpress-sg"
+  key_name = "wordpress"
 }
 
-resource "aws_key_pair" "wordpress" {
-  key_name = var.key_name
-  public_key = file("${path.module}/.ssh/id_rsa.pub")
+module "apache_container" {
+  source = "./modules/docker"
+
+  image           = "httpd"
+  tag             = "latest"
+  container_name  = "apache-container"
+  internal_port   = 80
+  external_port   = 8080
 }
 
-resource "aws_iam_role" "ssm_role" {
-  name = "ssm_role"
+module "nagios_ec2" {
+  source = "./modules/nagios_ec2"
 
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
-}
-EOF
-}
+  instance_name = "nagios-instance-1"
+  ami = "ami-05a5f6298acdb05b6"
+  instance_type = "t2.micro"
 
-resource "aws_iam_role_policy_attachment" "ssm_role_attachment" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-  role       = aws_iam_role.ssm_role.name
-}
-
-resource "aws_instance" "wordpress" {
-  ami           = "ami-05a5f6298acdb05b6" 
-  instance_type = "t2.micro"  
-  security_groups = [aws_security_group.onboarding.name]
-
-  key_name = aws_key_pair.wordpress.key_name
-
-  iam_instance_profile = aws_iam_instance_profile.ssm_instance_profile.name
-
-  private_ip = "172.31.42.242"  
-
-  root_block_device {
-    volume_size = 20
-  }
-
-  tags = {
-    Name = "wordpress-instance-1"
-  }
-}
-
-resource "aws_iam_instance_profile" "ssm_instance_profile" {
-  name = "ssm_instance_profile"
-  role = aws_iam_role.ssm_role.name
-}
-
-resource "docker_image" "httpd" {
-  name         = "httpd:latest"
-  keep_locally = false
-}
-
-resource "docker_container" "my_apache_container" {
-  name  = "apache-container"
-  image = docker_image.httpd.image_id
-
-  ports {
-    internal = 80
-    external = 8080
-  }
+  sg_name = "nagios-sg"
+  key_name = "nagios"
 }
