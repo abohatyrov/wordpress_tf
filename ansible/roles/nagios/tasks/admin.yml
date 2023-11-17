@@ -1,6 +1,6 @@
 ---
 - name: Create htpasswd file
-  community.general.htpasswd:
+  htpasswd:
     path: /usr/local/nagios/etc/htpasswd.users
     name: nagiosadmin
     password: "{{ nagios_admin_password }}"
