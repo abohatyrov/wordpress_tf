@@ -21,3 +21,6 @@
   command: "make && make install"
   args:
     chdir: "/tmp/nagios-plugins-release-{{ nagios_plugins_version }}"
+  notify:
+    - restart apache 
+    - restart nagios  
