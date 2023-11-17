@@ -1,6 +1,8 @@
 ---
 - name: Compile Nagios Core
   command: "./configure"
+  args:
+    chdir: "/tmp/nagios-{{ nagios_version }}"
 
 - name: Install Nagios Core files
   command: "make install"
