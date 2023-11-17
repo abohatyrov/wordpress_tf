@@ -72,6 +72,8 @@ resource "aws_instance" "wordpress" {
 
   iam_instance_profile = aws_iam_instance_profile.ssm_instance_profile.name
 
+  private_ip = "172.31.42.242"  
+
   root_block_device {
     volume_size = 20
   }
