@@ -11,11 +11,6 @@
     state: present
   loop: [ "httpd", "php", "php-cli", "gcc", "glibc", "glibc-common", "gd", "gd-devel", "make", "net-snmp", "openssl", "perl", "wget", "unzip", "openssl-devel" ]
 
-- name: Install passlib
-  pip:
-    name: passlib
-    executable: pip3
-
 - name: Download and Extract Nagios Core source
   ansible.builtin.unarchive:
     src: "https://github.com/NagiosEnterprises/nagioscore/releases/download/nagios-{{ nagios_version }}/nagios-{{ nagios_version }}.tar.gz"
