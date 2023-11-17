@@ -25,8 +25,29 @@
   args:
     chdir: "/tmp/nagios-{{ nagios_version }}"
 
-- name: Install Nagios plugins
-  command: "make install-plugin"
+- name: Install Nagios daemon init
+  command: make install-daemoninit
   args:
-    chdir: "/tmp/nagios-{{ nagios_version }}/plugins"
+    chdir: "/tmp/nagios-{{ nagios_version }}"
+  notify: restart httpd
+
+- name: Enable httpd service
+  systemd:
+    name: httpd.service
+    enabled: yes
+
+- name: Install Nagios Command Mode
+  command: "make install-commandmode"
+  args:
+    chdir: "/tmp/nagios-{{ nagios_version }}"
+
+- name: Install Nagios Configuration Files
+  command: "make install-config"
+  args:
+    chdir: "/tmp/nagios-{{ nagios_version }}"  
+
+- name: Install Apache Config Files
+  command: "make install-webconf"
+  args:
+    chdir: "/tmp/nagios-{{ nagios_version }}"
 
