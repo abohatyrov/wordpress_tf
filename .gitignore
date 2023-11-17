@@ -33,5 +33,7 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-.aws
-.ssh
+**/.aws
+**/.ssh
+**/.vagrant
+**/hosts

@@ -72,6 +72,10 @@ resource "aws_instance" "wordpress" {
 
   iam_instance_profile = aws_iam_instance_profile.ssm_instance_profile.name
 
+  root_block_device {
+    volume_size = 20
+  }
+
   tags = {
     Name = "wordpress-instance-1"
   }
@@ -82,3 +86,17 @@ resource "aws_iam_instance_profile" "ssm_instance_profile" {
   role = aws_iam_role.ssm_role.name
 }
 
+resource "docker_image" "httpd" {
+  name         = "httpd:latest"
+  keep_locally = false
+}
+
+resource "docker_container" "my_apache_container" {
+  name  = "apache-container"
+  image = docker_image.httpd.image_id
+
+  ports {
+    internal = 80
+    external = 8080
+  }
+}

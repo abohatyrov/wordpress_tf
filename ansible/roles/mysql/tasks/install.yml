@@ -13,5 +13,12 @@
       - python3-PyMySQL
       - python3-firewall
     state: latest
-  notify: Start and Enable MySQL
+  notify: Start and enable MySQL
+
+- name: Start and enable MySQL
+  service:
+    name: mysqld
+    state: started
+    enabled: yes
+
   

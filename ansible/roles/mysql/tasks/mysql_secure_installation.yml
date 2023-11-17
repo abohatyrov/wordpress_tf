@@ -2,7 +2,7 @@
 - name: Update root password for MySQL
   community.mysql.mysql_user:
     login_user: root
-    login_password: "{{ mysql_root_password }}"
+    login_password: "root"
     name: root
     password: "{{ mysql_root_password }}"
     host: "{{ item }}"

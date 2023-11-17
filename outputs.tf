@@ -1,3 +1,3 @@
-output "IP_Address" {
+output "WP_IP_Address" {
   value = "${aws_instance.wordpress.public_ip}"
 }
