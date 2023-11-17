@@ -36,7 +36,7 @@ resource "aws_security_group" "nagios" {
 
 resource "aws_key_pair" "nagios" {
   key_name = var.key_name
-  public_key = file("${path.root}/.ssh/id_rsa.pub")
+  public_key = file("${path.cwd}/.ssh/id_rsa.pub")
 }
 
 resource "aws_iam_role" "ssm_role" {
