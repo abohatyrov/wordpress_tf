@@ -32,3 +32,38 @@ define service{
         service_description     FTP Monitoring
         check_command           check_nrpe!check_ftp
         }
+
+define service{
+        use                     generic-service
+        host_name               wordpress
+        service_description     Check if the web server is running
+        check_command           check_nrpe!check_apache
+        }
+
+define service{
+        use                     generic-service
+        host_name               wordpress
+        service_description     Monitor MySQL process
+        check_command           check_nrpe!check_processes
+        }
+
+define service{
+        use                     generic-service
+        host_name               wordpress
+        service_description     Check the status of the WordPress website
+        check_command           check_nrpe!check_wordpress
+        }
+
+define service{
+        use                     generic-service
+        host_name               wordpress
+        service_description     Monitor the disk space where WordPress is installed
+        check_command           check_nrpe!check_disk_space
+        }
+
+define service{
+        use                     generic-service
+        host_name               wordpress
+        service_description     HTTP
+        check_command           check_nrpe!check_http -H localhost
+        }

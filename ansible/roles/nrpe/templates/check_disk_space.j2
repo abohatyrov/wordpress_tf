@@ -1,0 +1,13 @@
+#!/bin/bash
+
+threshold=80
+current_usage=$(df -h /var/www/html/wordpress/  | awk 'NR==2 {print $5}' | cut -d'%' -f1)
+
+if [ "$current_usage" -lt "$threshold" ]; then
+  echo "OK: Disk space usage is below $threshold%"
+  exit 0
+else
+  echo "CRITICAL: Disk space usage is above $threshold%"
+  exit 2
+fi
+

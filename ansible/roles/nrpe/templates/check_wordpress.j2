@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if curl -sSf http://localhost/wordpress >/dev/null; then
+  echo "OK: WordPress website is accessible"
+  exit 0
+else
+  echo "CRITICAL: WordPress website is not accessible"
+  exit 2
+fi

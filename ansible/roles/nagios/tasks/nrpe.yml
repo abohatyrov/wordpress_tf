@@ -24,8 +24,8 @@
 - name: Build and Install Nagios NRPE Agent
   shell: |
     ./configure --enable-command-args 
-    make install-groups-users
     make all
+    make install-groups-users
     make install
     make install-config
     make install-init
@@ -40,11 +40,6 @@
   args:
     chdir: /tmp/nagios-plugins-{{ plugin_version }}
 
-- name: Update services file with NRPE Service Name, Port and Protocol
-  lineinfile:
-    path: /etc/services
-    line: "nrpe            5666/tcp                # NRPE Service"
-
 - name: Add IP to allowed_hosts in nrpe.cfg
   lineinfile:
     path: /usr/local/nagios/etc/nrpe.cfg
@@ -56,6 +51,11 @@
     path: /usr/local/nagios/etc/nrpe.cfg
     regexp: '^dont_blame_nrpe='
     line: 'dont_blame_nrpe=1'
+
+- name: Update services file with NRPE Service Name, Port and Protocol
+  lineinfile:
+    path: /etc/services
+    line: "nrpe            5666/tcp                # NRPE Service"
 
 - name: Add hosts to Nagios
   template:
@@ -105,3 +105,4 @@
     daemon_reload: yes
     state: restarted
     enabled: true
+  notify: restart nagios

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if systemctl is-active httpd >/dev/null 2>&1; then
+  echo "OK: Web server is running"
+  exit 0
+else
+  echo "CRITICAL: Web server is not running"
+  exit 2
+fi

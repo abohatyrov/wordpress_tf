@@ -1,14 +1,14 @@
 ---
 - name: Build and Install Nagios NRPE Agent
   shell: |
-    ./configure --enable-command-args --with-nrpe-user=nagios --with-nrpe-group=nagios
-    make install-groups-users
+    ./configure --enable-command-args 
     make all
+    make install-groups-users
     make install
     make install-config
     make install-init
   args:
-    chdir: /tmp/nrpe-{{ nrpe_version }}
+    chdir: /tmp/nrpe-nrpe-{{ nrpe_version }}
 
 - name: Build and Install Nagios NRPE Plugins
   shell: |
@@ -17,4 +17,5 @@
     make install
   args:
     chdir: /tmp/nagios-plugins-{{ plugin_version }}
+
 
