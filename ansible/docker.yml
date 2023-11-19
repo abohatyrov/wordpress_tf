@@ -1,6 +1,6 @@
 ---
 - name: Install NRPE on Docker Hosts 
-  hosts: docker
+  hosts: localhost
   user: ec2-user
   become: yes
   vars_files:
