@@ -85,7 +85,7 @@
 
 - name: Add nrpe command to Nagios
   blockinfile:
-    path: /path/to/your/file.cfg
+    path: /usr/local/nagios/etc/objects/commands.cfg
     block: |
       define command{
         command_name check_nrpe
