@@ -11,7 +11,7 @@
 
 - name: Download and Extract NRPE Source File 
   unarchive:
-    src: "https://github.com/NagiosEnterprises/nrpe/releases/download/nrpe-{{ nrpe_version }}/nrpe-{{ nrpe_version }}.tar.gz"
+    src: "https://github.com/NagiosEnterprises/nrpe/archive/nrpe-{{ nrpe_version }}.tar.gz"
     dest: /tmp
     remote_src: yes
 
@@ -23,14 +23,14 @@
 
 - name: Build and Install Nagios NRPE Agent
   shell: |
-    ./configure --enable-command-args --with-nrpe-user=nagios --with-nrpe-group=nagios
+    ./configure --enable-command-args 
     make install-groups-users
     make all
     make install
     make install-config
     make install-init
   args:
-    chdir: /tmp/nrpe-{{ nrpe_version }}
+    chdir: /tmp/nrpe-nrpe-{{ nrpe_version }}
 
 - name: Build and Install Nagios NRPE Plugins
   shell: |
@@ -45,13 +45,53 @@
     path: /etc/services
     line: "nrpe            5666/tcp                # NRPE Service"
 
-# - name: Configure NRPE agent
-#   template:
-#     src: nrpe.cfg.j2
-#     dest: /usr/local/nagios/etc/nrpe.cfg
-#     owner: nagios
-#     group: nagios
-#     mode: 0644
+- name: Add IP to allowed_hosts in nrpe.cfg
+  lineinfile:
+    path: /usr/local/nagios/etc/nrpe.cfg
+    regexp: '^allowed_hosts='
+    line: 'allowed_hosts=127.0.0.1,{{ nagios_server_ip }}'
+
+- name: Set dont_blame_nrpe to 1 in nrpe.cfg
+  lineinfile:
+    path: /usr/local/nagios/etc/nrpe.cfg
+    regexp: '^dont_blame_nrpe='
+    line: 'dont_blame_nrpe=1'
+
+- name: Add hosts to Nagios
+  template:
+    src: templates/hosts.cfg.j2
+    dest: /usr/local/nagios/etc/hosts.cfg
+    owner: nagios
+    group: nagios
+    mode: 0644
+
+- name: Add services to Nagios
+  template:
+    src: templates/services.cfg.j2
+    dest: /usr/local/nagios/etc/services.cfg
+    owner: nagios
+    group: nagios
+    mode: 0644
+
+- name: Add hosts and services to Nagios config
+  lineinfile:
+    path: /usr/local/nagios/etc/nagios.cfg
+    line: "{{ item }}"
+    insertafter: EOF
+    state: present
+  loop:
+    - "cfg_file=/usr/local/nagios/etc/hosts.cfg"
+    - "cfg_file=/usr/local/nagios/etc/services.cfg"
+
+- name: Add nrpe command to Nagios
+  blockinfile:
+    path: /path/to/your/file.cfg
+    block: |
+      define command{
+        command_name check_nrpe
+        command_line $USER1$/check_nrpe -H $HOSTADDRESS$ -c $ARG1$
+      }
+    insertafter: EOF
 
 - name: Disable SSL when running NRPE Agent 
   replace:
