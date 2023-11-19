@@ -1,8 +1,8 @@
 [wordpress]
-wp_server1 ansible_host=172.31.18.29
+wp_server1 ansible_host=3.92.173.78
 
 [nagios]
-ng_server1 ansible_host=172.31.24.252
+ng_server1 ansible_host=52.23.251.206
 
 [nrpe]
 172.31.18.29

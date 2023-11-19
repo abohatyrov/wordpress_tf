@@ -1,5 +1,5 @@
 module "wordpress_ec2" {
-  source = "./modules/wordpress_ec2"
+  source = "./modules/ec2"
 
   instance_name = "wordpress-instance-1"
   ami           = "ami-05a5f6298acdb05b6"
@@ -21,7 +21,7 @@ module "apache_container" {
 }
 
 module "nagios_ec2" {
-  source = "./modules/nagios_ec2"
+  source = "./modules/ec2"
 
   instance_name = "nagios-instance-1"
   ami           = "ami-05a5f6298acdb05b6"
