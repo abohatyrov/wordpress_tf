@@ -1,0 +1,25 @@
+---
+- name: Install Required Build Packages/Tools
+  yum:
+    name:
+      - gcc
+      - glibc
+      - glibc-common
+      - openssl
+      - openssl-devel
+    state: present
+
+- name: Download and Extract NRPE Source File 
+  unarchive:
+    src: "https://github.com/NagiosEnterprises/nrpe/archive/nrpe-{{ nrpe_version }}.tar.gz"
+    dest: /tmp
+    remote_src: yes
+    check_certs: no
+
+- name: Download and Extract NRPE Plugins Source File 
+  unarchive:
+    src: "https://github.com/nagios-plugins/nagios-plugins/releases/download/release-{{ plugin_version }}/nagios-plugins-{{ plugin_version }}.tar.gz"
+    dest: /tmp
+    remote_src: yes
+    check_certs: no
+

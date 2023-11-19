@@ -1,0 +1,83 @@
+#!/bin/bash
+
+# Nagios exit codes
+OK=0
+WARNING=1
+CRITICAL=2
+UNKNOWN=3
+
+# Default values
+CONTAINER_NAME=""
+DOCKER_CMD="docker"
+HTTPD_SERVICE_NAME=""
+
+# Function to display script usage
+usage() {
+    echo "Usage: $0 -c <container_name> [-s <httpd_service_name>] [-d <docker_command>]"
+    exit $UNKNOWN
+}
+
+# Parse command line options
+while getopts "c:d:s:" opt; do
+    case $opt in
+        c)
+            CONTAINER_NAME="$OPTARG"
+            ;;
+        d)
+            DOCKER_CMD="$OPTARG"
+            ;;
+        s)
+            HTTPD_SERVICE_NAME="$OPTARG"
+            ;;
+        \?)
+            usage
+            ;;
+    esac
+done
+
+# Check if container name is provided
+if [ -z "$CONTAINER_NAME" ]; then
+    echo "DOCKER UNKNOWN - Container name is required."
+    usage
+fi
+
+# Check if the -s option is provided
+if [ -n "$HTTPD_SERVICE_NAME" ]; then
+    # Check if the container is running
+    RUNNING=$($DOCKER_CMD inspect --format '{{.State.Running}}' "$CONTAINER_NAME" 2>/dev/null)
+
+    # Check the result and exit with appropriate Nagios code
+    if [ "$RUNNING" == "true" ]; then
+        # Check if HTTPD service is running inside the container
+        HTTPD_RUNNING=$($DOCKER_CMD exec "$CONTAINER_NAME" pgrep "$HTTPD_SERVICE_NAME" 2>/dev/null)
+
+        if [ -n "$HTTPD_RUNNING" ]; then
+            echo "DOCKER OK - Container $CONTAINER_NAME is running and $HTTPD_SERVICE_NAME is running inside."
+            exit $OK
+        else
+            echo "DOCKER CRITICAL - Container $CONTAINER_NAME is running, but $HTTPD_SERVICE_NAME is not running inside."
+            exit $CRITICAL
+        fi
+    elif [ "$RUNNING" == "false" ]; then
+        echo "DOCKER CRITICAL - Container $CONTAINER_NAME is not running."
+        exit $CRITICAL
+    else
+        echo "DOCKER UNKNOWN - Unable to determine the state of container $CONTAINER_NAME."
+        exit $UNKNOWN
+    fi
+else
+    # Check only Docker status when -c is provided without -s
+    RUNNING=$($DOCKER_CMD inspect --format '{{.State.Running}}' "$CONTAINER_NAME" 2>/dev/null)
+
+    # Check the result and exit with appropriate Nagios code
+    if [ "$RUNNING" == "true" ]; then
+        echo "DOCKER OK - Container $CONTAINER_NAME is running."
+        exit $OK
+    elif [ "$RUNNING" == "false" ]; then
+        echo "DOCKER CRITICAL - Container $CONTAINER_NAME is not running."
+        exit $CRITICAL
+    else
+        echo "DOCKER UNKNOWN - Unable to determine the state of container $CONTAINER_NAME."
+        exit $UNKNOWN
+    fi
+fi
