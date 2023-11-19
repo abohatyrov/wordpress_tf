@@ -22,20 +22,6 @@ define service{
 define service{
         use                     generic-service
         host_name               wordpress
-        service_description     SSH Monitoring
-        check_command           check_nrpe!check_ssh
-        }
-
-define service{
-        use                     generic-service
-        host_name               wordpress
-        service_description     FTP Monitoring
-        check_command           check_nrpe!check_ftp
-        }
-
-define service{
-        use                     generic-service
-        host_name               wordpress
         service_description     Check if the web server is running
         check_command           check_nrpe!check_apache
         }
