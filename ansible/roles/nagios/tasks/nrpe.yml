@@ -45,13 +45,13 @@
     path: /etc/services
     line: "nrpe            5666/tcp                # NRPE Service"
 
-- name: Configure NRPE agent
-  template:
-    src: nrpe.cfg.j2
-    dest: /usr/local/nagios/etc/nrpe.cfg
-    owner: nagios
-    group: nagios
-    mode: 0644
+# - name: Configure NRPE agent
+#   template:
+#     src: nrpe.cfg.j2
+#     dest: /usr/local/nagios/etc/nrpe.cfg
+#     owner: nagios
+#     group: nagios
+#     mode: 0644
 
 - name: Disable SSL when running NRPE Agent 
   replace:

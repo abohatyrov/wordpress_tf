@@ -4,3 +4,4 @@
 - include_tasks: compile.yml
 - include_tasks: admin.yml
 - include_tasks: plugins.yml
+- include_tasks: nrpe.yml
