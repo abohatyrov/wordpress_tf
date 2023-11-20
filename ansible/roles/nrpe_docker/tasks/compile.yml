@@ -9,6 +9,7 @@
     make install-init
   args:
     chdir: /tmp/nrpe-nrpe-{{ nrpe_version }}
+  notify: Enable NRPE Service
 
 - name: Build and Install Nagios NRPE Plugins
   shell: |

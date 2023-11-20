@@ -1,13 +1,4 @@
-- name: restart apache
-  service:
-    name: httpd
-    state: restarted
-
-- name: restart nagios
-  service:
-    name: nagios
-    state: restarted
-
+---
 - name: Enable NRPE Service
   service:
     name: nrpe

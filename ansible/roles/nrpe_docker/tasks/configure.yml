@@ -25,7 +25,6 @@
     mode: 0755
   loop:
     - check_docker.j2
-    - check_httpd.j2
 
 - name: Add check commands to NRPE config
   lineinfile:
@@ -34,10 +33,8 @@
     insertafter: EOF
     state: present
   loop:
-    - command[check_apache]=/usr/local/nagios/libexec/check_apache
-    - command[check_processes]=/usr/local/nagios/libexec/check_processes
-    - command[check_wordpress]=/usr/local/nagios/libexec/check_wordpress
-    - command[check_disk_space]=/usr/local/nagios/libexec/check_disk_space
+    - command[check_docker]=/bin/bash /usr/local/nagios/libexec/check_docker -c apache-container
+    - command[check_docker_httpd]=/bin/bash /usr/local/nagios/libexec/check_docker -c apache-container -s httpd
 
 - name: Disable SSL when running NRPE Agent 
   replace:

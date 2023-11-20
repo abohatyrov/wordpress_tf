@@ -36,10 +36,11 @@
     insertafter: EOF
     state: present
   loop:
-    - command[check_apache]=/usr/local/nagios/libexec/check_apache
-    - command[check_processes]=/usr/local/nagios/libexec/check_processes
-    - command[check_wordpress]=/usr/local/nagios/libexec/check_wordpress
-    - command[check_disk_space]=/usr/local/nagios/libexec/check_disk_space
+    - command[check_apache]=/bin/bash /usr/local/nagios/libexec/check_apache
+    - command[check_processes]=/bin/bash /usr/local/nagios/libexec/check_processes
+    - command[check_wordpress]=/bin/bash /usr/local/nagios/libexec/check_wordpress
+    - command[check_disk_space]=/bin/bash /usr/local/nagios/libexec/check_disk_space
+    - command[check_http]=/bin/bash /usr/local/nagios/libexec/check_http -I localhost
 
 - name: Disable SSL when running NRPE Agent 
   replace:

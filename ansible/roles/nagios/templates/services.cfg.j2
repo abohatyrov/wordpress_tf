@@ -58,12 +58,12 @@ define service{
         use                     generic-service
         host_name               docker
         service_description     Check if Docker is running
-        check_command           check_nrpe!check_docker -c apache-container
+        check_command           check_nrpe!check_docker 
         }
       
 define service{
         use                     generic-service
         host_name               docker
         service_description     Check if the web server is running
-        check_command           check_nrpe!check_docker -c apache-container -s httpd
+        check_command           check_nrpe!check_docker_httpd
         }
