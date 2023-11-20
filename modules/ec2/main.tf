@@ -32,6 +32,16 @@ resource "aws_security_group" "wordpress" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  dynamic "ingress" {
+    for_each = var.icmp ? [1] : []
+    content {
+      from_port   = -1
+      to_port     = -1
+      protocol    = "icmp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+  }
+
   egress {
     from_port   = 0
     to_port     = 0

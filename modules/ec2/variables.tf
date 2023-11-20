@@ -39,3 +39,8 @@ variable "sg_name" {
   description = "The name of the security group"
 }
 
+variable "icmp" {
+  default = false
+  type    = bool
+  description = "Whether to allow ICMP traffic"
+}

@@ -6,6 +6,7 @@ module "wordpress_ec2" {
   instance_type = "t2.micro"
 
   sg_name  = "wordpress-sg"
+  icmp     = true
   key_name = "wordpress"
   key_path = "${path.module}/.ssh/id_rsa.pub"
 }
