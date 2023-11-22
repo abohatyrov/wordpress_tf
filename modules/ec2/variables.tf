@@ -44,3 +44,9 @@ variable "icmp" {
   type    = bool
   description = "Whether to allow ICMP traffic"
 }
+
+variable "add_ports" {
+  default = []
+  type    = list(number)
+  description = "Additional ports to open"
+}

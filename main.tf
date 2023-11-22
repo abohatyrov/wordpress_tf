@@ -40,7 +40,8 @@ module "prometheus_ec2" {
   ami           = "ami-05a5f6298acdb05b6"
   instance_type = "t2.micro"
 
-  sg_name  = "prom-sg"
-  key_name = "prom"
-  key_path = "${path.module}/.ssh/id_rsa.pub"
+  sg_name   = "prom-sg"
+  add_ports = [9090]
+  key_name  = "prom"
+  key_path  = "${path.module}/.ssh/id_rsa.pub"
 }
