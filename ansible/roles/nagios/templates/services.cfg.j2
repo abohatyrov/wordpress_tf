@@ -67,3 +67,24 @@ define service{
         service_description     Check if the web server is running
         check_command           check_nrpe!check_docker_httpd
         }
+
+define service{
+        use                     generic-service
+        host_name               docker
+        service_description     CPU Load
+        check_command           check_nrpe!check_load
+        }
+
+define service{
+        use                     generic-service
+        host_name               docker
+        service_description     Total Processes
+        check_command           check_nrpe!check_total_procs
+        }
+
+define service{
+        use                     generic-service
+        host_name               docker
+        service_description     Current Users
+        check_command           check_nrpe!check_users
+        }
