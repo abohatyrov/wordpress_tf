@@ -5,7 +5,7 @@ check_period                    24x7
 check_interval                  5       
 retry_interval                  1       
 max_check_attempts              10      
-check_command                   check_icmp
+check_command                   check-host-alive
 notification_period             24x7    
 notification_interval           30      
 notification_options            d,r     
@@ -24,5 +24,5 @@ define host{
 use                             linux
 host_name                       docker
 alias                           RHEL 9 Instance with Docker and Apache
-address                         {{ ansible_default_ipv4.address }}
+address                         {{ docker_server_ip }}
 }

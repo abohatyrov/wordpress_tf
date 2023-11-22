@@ -1,0 +1,13 @@
+---
+- name: Update the system
+  dnf:
+    name: '*'
+    state: latest
+    exclude: kernel*
+    
+- name: Install Prometheus
+  unarchive:
+    src: https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz
+    dest: /tmp
+    remote_src: yes
+

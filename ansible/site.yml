@@ -2,3 +2,4 @@
 - import_playbook: wordpress.yml
 - import_playbook: docker.yml
 - import_playbook: nagios.yml
+- import_playbook: prometheus.yml

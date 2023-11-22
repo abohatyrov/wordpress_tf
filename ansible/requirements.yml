@@ -7,3 +7,12 @@
 
 - name: community.general
   version: ">=7.1.0"
+
+- name: community.aws
+  version: ">=1.3.0"
+
+- name: amazon.aws.aws_secret
+  version: ">=1.0.0"
+
+- name: amazon.aws.secretsmanager_secret
+  version: ">=1.0.0"

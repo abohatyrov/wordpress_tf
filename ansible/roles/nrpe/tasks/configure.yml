@@ -48,9 +48,7 @@
     regexp: '-f$'
     replace: '-f -n'
 
-- name: Start and Enable NRPE to run on System boot
-  systemd:
+- name: Restart NRPE Service
+  service:
     name: nrpe
-    daemon_reload: yes
     state: restarted
-    enabled: true

@@ -28,10 +28,19 @@
     make install-groups-users
     make install
     make install-config
-    make install-init
   args:
     chdir: /tmp/nrpe-nrpe-{{ nrpe_version }}
-  notify: Enable NRPE Service
+
+- name: Initialize Nagios Plugins
+  command: make install-init
+  args:
+    chdir: /tmp/nrpe-nrpe-{{ nrpe_version }}
+
+- name: Enable NRPE Service
+  service:
+    name: nrpe
+    enabled: yes
+    state: started
 
 - name: Build and Install Nagios NRPE Plugins
   shell: |
@@ -92,10 +101,6 @@
         command_name check_nrpe
         command_line $USER1$/check_nrpe -H $HOSTADDRESS$ -c $ARG1$
       }
-      define command {
-        command_name check_icmp
-        comand_line $USER1$/check_icmp -H $HOSTADDRESS$ -w 3000.0,80% -c 5000.0,100%
-      }
     insertafter: EOF
 
 - name: Disable SSL when running NRPE Agent 
@@ -104,10 +109,12 @@
     regexp: '-f$'
     replace: '-f -n'
 
-- name: Start and Enable NRPE to run on System boot
-  systemd:
+- name: Restart NRPE Service
+  service:
     name: nrpe
-    daemon_reload: yes
     state: restarted
-    enabled: true
-  notify: restart nagios
+
+- name: restart nagios
+  service:
+    name: nagios
+    state: restarted

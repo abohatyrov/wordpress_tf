@@ -52,3 +52,12 @@
     chdir: "/tmp/nagios-{{ nagios_version }}"
   notify: restart apache
 
+- name: restart apache
+  service:
+    name: httpd
+    state: restarted
+
+- name: restart nagios
+  service:
+    name: nagios
+    state: restarted

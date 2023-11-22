@@ -1,0 +1,56 @@
+---
+- name: Add prometheus user
+  user:
+    name: prometheus
+    shell: /bin/false
+    createhome: no
+
+- name: Create Prometheus directories in "/etc" and "/var/lib" locations
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: prometheus  
+    group: prometheus  
+    mode: '0755'
+  loop:
+    - /etc/prometheus
+    - /var/lib/prometheus
+
+- name: Copy prometheus binary to /usr/local/bin
+  copy:
+    src: /tmp/prometheus-{{ prometheus_version }}.linux-amd64/prometheus
+    dest: /usr/local/bin/prometheus
+    owner: prometheus
+    group: prometheus
+    mode: '0755'
+    remote_src: yes
+
+- name: Copy promtool binary to /usr/local/bin
+  copy:
+    src: /tmp/prometheus-{{ prometheus_version }}.linux-amd64/promtool
+    dest: /usr/local/bin/promtool
+    owner: prometheus
+    group: prometheus
+    mode: '0755'
+    remote_src: yes
+
+- name: Copy consoles directoriy to /etc/prometheus
+  copy:
+    src: /tmp/prometheus-{{ prometheus_version }}.linux-amd64/consoles
+    dest: /etc/prometheus/consoles
+    owner: prometheus
+    group: prometheus
+    mode: '0755'
+    remote_src: yes
+
+- name: Copy console_libraries directory to /etc/prometheus
+  copy:
+    src: /tmp/prometheus-{{ prometheus_version }}.linux-amd64/console_libraries
+    dest: /etc/prometheus/console_libraries
+    owner: prometheus
+    group: prometheus
+    mode: '0755'
+    remote_src: yes
+
+
+  

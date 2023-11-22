@@ -37,13 +37,6 @@ define('DB_CHARSET', 'utf8');
 /** The Database Collate type. Don't change this if in doubt. */
 define('DB_COLLATE', '');
 
-// ** Authentication Unique Keys and Salts. ** //
-{% for key, value in wordpress_keys.items() %}
-define('{{ key }}', '{{ value }}');
-{% endfor %}
-
-/**#@-*/
-
 /**
  * WordPress Database Table prefix.
  *
@@ -70,5 +63,5 @@ if ( !defined('ABSPATH') )
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');
 
-define('WP_HOME', 'http://18.209.100.210/wordpress');
-define('WP_SITEURL', 'http://18.209.100.210/wordpress');
+define('WP_HOME', 'http://3.84.109.77/wordpress');
+define('WP_SITEURL', 'http://3.84.109.77/wordpress');

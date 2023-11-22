@@ -1,0 +1,8 @@
+---
+- name: Create prometheus.yml file from template
+  template:
+    src: prometheus.yml.j2
+    dest: /etc/prometheus/prometheus.yml
+    owner: prometheus
+    group: prometheus
+    mode: '0644'

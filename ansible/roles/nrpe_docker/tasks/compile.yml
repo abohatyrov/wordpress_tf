@@ -6,10 +6,19 @@
     make install-groups-users
     make install
     make install-config
-    make install-init
   args:
     chdir: /tmp/nrpe-nrpe-{{ nrpe_version }}
-  notify: Enable NRPE Service
+
+- name: Initialize Nagios Agent
+  command: make install-init
+  args:
+    chdir: /tmp/nrpe-nrpe-{{ nrpe_version }}
+
+- name: Enable NRPE Service
+  service:
+    name: nrpe
+    enabled: yes
+    state: started
 
 - name: Build and Install Nagios NRPE Plugins
   shell: |
@@ -19,4 +28,7 @@
   args:
     chdir: /tmp/nagios-plugins-{{ plugin_version }}
 
-
+- name: Restart NRPE Service
+  service:
+    name: nrpe
+    state: restarted
