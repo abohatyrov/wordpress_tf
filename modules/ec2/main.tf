@@ -32,11 +32,14 @@ resource "aws_security_group" "wordpress" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    from_port   = var.add_ports[*]
-    to_port     = var.add_ports[*]
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0./0"]
+  dynamic "ingress" {
+    for_each = var.add_ports
+    content {
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
   }
 
   dynamic "ingress" {
