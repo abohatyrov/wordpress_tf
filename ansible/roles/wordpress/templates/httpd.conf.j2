@@ -12,5 +12,13 @@
     <IfModule mod_dir.c>
         DirectoryIndex index.php index.html index.cgi index.pl  index.xhtml index.htm
     </IfModule>
-
 </VirtualHost>
+
+ExtendedStatus On
+
+<Location /server-status>
+    SetHandler server-status
+    Order deny,allow
+    Deny from all
+    Allow from localhost
+</Location>
