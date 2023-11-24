@@ -1,0 +1,9 @@
+---
+- name: Copy apache_exporter binary
+  copy:
+    src: /tmp/apache_exporter-{{apache_exporter_version}}.linux-amd64/apache_exporter
+    dest: /usr/local/bin/apache_exporter
+    user: "{{ apache_exporter_user }}"
+    group: "{{ apache_exporter_group }}"
+    mode: 0755
+    remote_src: yes

@@ -1,54 +1,8 @@
 ---
-- name: Add IP to allowed_hosts in nrpe.cfg
-  lineinfile:
-    path: /usr/local/nagios/etc/nrpe.cfg
-    regexp: '^allowed_hosts='
-    line: 'allowed_hosts=127.0.0.1,{{ nagios_server_ip }}'
-
-- name: Set dont_blame_nrpe to 1 in nrpe.cfg
-  lineinfile:
-    path: /usr/local/nagios/etc/nrpe.cfg
-    regexp: '^dont_blame_nrpe='
-    line: 'dont_blame_nrpe=1'
-
-- name: Update services file with NRPE Service Name, Port and Protocol
-  lineinfile:
-    path: /etc/services
-    line: "nrpe            5666/tcp                # NRPE Service"
-
-- name: Add scripts
+- name: Add NRPE Config
   template:
-    src: "{{ item }}"
-    dest: /usr/local/nagios/libexec/{{ item | basename | regex_replace('\\.j2$', '') }}
-    owner: nagios
-    group: nagios
-    mode: 0755
-  loop:
-    - check_apache.j2
-    - check_processes.j2
-    - check_wordpress.j2
-    - check_disk_space.j2
-
-- name: Add check commands to NRPE config
-  lineinfile:
-    path: /usr/local/nagios/etc/nrpe.cfg
-    line: "{{ item }}"
-    insertafter: EOF
-    state: present
-  loop:
-    - command[check_apache]=/bin/bash /usr/local/nagios/libexec/check_apache
-    - command[check_processes]=/bin/bash /usr/local/nagios/libexec/check_processes
-    - command[check_wordpress]=/bin/bash /usr/local/nagios/libexec/check_wordpress
-    - command[check_disk_space]=/bin/bash /usr/local/nagios/libexec/check_disk_space
-    - command[check_http]=/bin/bash /usr/local/nagios/libexec/check_http -I localhost
-
-- name: Disable SSL when running NRPE Agent 
-  replace:
-    path: /usr/lib/systemd/system/nrpe.service
-    regexp: '-f$'
-    replace: '-f -n'
-
-- name: Restart NRPE Service
-  service:
-    name: nrpe
-    state: restarted
+    src: nrpe.cfg.j2
+    dest: /usr/local/nagios/etc/nrpe.cfg
+    user: "{{ nrpe_user }}"
+    group: "{{ nrpe_group }}"
+  notify: Restart NRPE Service

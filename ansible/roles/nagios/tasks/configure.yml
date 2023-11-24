@@ -3,4 +3,4 @@
   template:
     src: "nagios.conf.j2"
     dest: "/etc/httpd/conf.d/nagios.conf"
-  notify: restart apache
+  notify: Restart Apache

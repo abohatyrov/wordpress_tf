@@ -1,0 +1,7 @@
+---
+mysql_root_password: root
+mysql_bind_address: localhost
+wordpress_db_user: wordpress
+wordpress_db_password: wordpress
+wordpress_db_name: wp_db
+wordpress_db_host: localhost

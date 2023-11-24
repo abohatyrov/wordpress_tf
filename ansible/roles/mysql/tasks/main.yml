@@ -1,4 +1,9 @@
 ---
-- import_tasks: install.yml
-- import_tasks: mysql_secure_installation.yml
-- import_tasks: database.yml
+- name: Install MySQL packages and dependencies
+  import_tasks: install.yml
+
+- name: Configure MySQL
+  import_tasks: mysql_secure_installation.yml
+
+- name: Create MySQL database and User
+  import_tasks: database.yml

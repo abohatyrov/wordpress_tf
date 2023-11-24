@@ -1,4 +1,6 @@
 ---
-- include_tasks: install.yml
-- include_tasks: configure.yml
-- include_tasks: prometheus.yml
+- name: Install Apache, Wordpress and dependencies
+  include_tasks: install.yml
+
+- name: Configure Apache and Wordpress
+  include_tasks: configure.yml

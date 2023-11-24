@@ -1,0 +1,11 @@
+---
+- name: Create group for node_exporter
+  group:
+    name: "{{ node_exporter_group }}"
+    state: present
+
+- name: Create user for node_exporter
+  user:
+    name: "{{ node_exporter_user }}"
+    group: "{{ node_exporter_group }}"
+    state: present

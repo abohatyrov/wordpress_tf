@@ -1,0 +1,14 @@
+[Unit]
+Description=Prometheus Apache Exporter
+Wants=network.target
+After=network.target
+
+[Service]
+User={{ apache_exporter_user }}
+Group={{ apache_exporter_group }}
+Type=simple
+ExecStart=/usr/local/bin/apache_exporter
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

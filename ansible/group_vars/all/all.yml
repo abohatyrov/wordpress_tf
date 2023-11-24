@@ -1,0 +1,4 @@
+---
+nagios_server_ip: "{{ hostvars['ng_server1']['ansible_host'] }}"
+wordpress_server_ip: "{{ hostvars['wp_server1']['ansible_host'] }}"
+docker_server_ip: "{{ hostvars['dk_server1']['ansible_host'] }}"

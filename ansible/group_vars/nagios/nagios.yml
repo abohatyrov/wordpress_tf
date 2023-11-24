@@ -1,0 +1,11 @@
+---
+nagios_version: 4.5.0
+nagios_plugins_version: 2.4.6
+nagios_user: nagios
+nagios_group: nagios
+nagios_admin_user: nagiosadmin
+nagios_admin_password: nagiosadmin1!
+nrpe_version: 4.1.0
+plugin_version: 2.4.7
+nrpe_user: nagios
+nrpe_group: nagios

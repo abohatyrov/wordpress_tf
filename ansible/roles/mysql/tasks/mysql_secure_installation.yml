@@ -33,3 +33,5 @@
   community.mysql.mysql_db:
     name: test
     state: absent
+  notify: Restart MySQL
+  

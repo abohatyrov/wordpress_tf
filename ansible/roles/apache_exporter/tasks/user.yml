@@ -1,0 +1,11 @@
+---
+- name: Create group for apache_exporter
+  group:
+    name: "{{ apache_exporter_group }}"
+    state: present
+
+- name: Create user for apache_exporter
+  user:
+    name: "{{ apache_exporter_user }}"
+    group: "{{ apache_exporter_group }}"
+    state: present

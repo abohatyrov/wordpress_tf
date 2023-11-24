@@ -4,8 +4,8 @@
   user: ec2-user
   become: yes
   vars_files:
-    - groups_vars/all/vars.yml
+    - nagios
 
   roles:
-    - nrpe_docker
-
+    - nrpe
+    - docker_exporter

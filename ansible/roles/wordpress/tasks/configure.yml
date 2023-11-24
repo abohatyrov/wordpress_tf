@@ -1,9 +1,8 @@
 ---
-- name: Extract Wordpress
-  unarchive:
-    src: https://wordpress.org/latest.tar.gz
-    dest: /var/www/html
-    remote_src: yes
+- name: Ensure SELinux allows web server to write to WordPress
+  seboolean:
+    name: httpd_can_network_connect_db
+    state: yes
 
 - name: Set up Apache VirtualHost
   template:
@@ -15,18 +14,6 @@
   template:  
     src: wp-config.php.j2
     dest: "/var/www/html/wordpress/wp-config.php"
-  notify:
+  notify: 
+    - Start and Enable Apache
     - Restart Apache
-
-- name: Start and Enable Apache
-  service:
-    name: 'httpd'
-    state: started
-    enabled: yes
-  become: true
-
-- name: Ensure SELinux allows web server to write to WordPress
-  seboolean:
-    name: httpd_can_network_connect_db
-    state: yes
-

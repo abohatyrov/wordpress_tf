@@ -2,9 +2,9 @@
 - name: Create htpasswd file
   htpasswd:
     path: /usr/local/nagios/etc/htpasswd.users
-    name: nagiosadmin
+    name: "{{ nagios_admin_user }}"
     password: "{{ nagios_admin_password }}"
     state: present
   notify: 
-    - restart apache
-    - restart nagios
+    - Restart Apache
+    - Restart Nagios

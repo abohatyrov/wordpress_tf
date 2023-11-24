@@ -1,4 +1,15 @@
 ---
-- include_tasks: install.yml
-- include_tasks: compile.yml
-- include_tasks: configure.yml
+- name: Install Nagios NRPE Agent and Plugins
+  include_tasks: install.yml
+
+- name: Build Nagios NRPE Agent
+  include_tasks: agent.yml
+
+- name: Build Nagios NRPE Plugins
+  include_tasks: plugins.yml
+
+- name: Configure Nagios NRPE Agent and Plugins
+  include_tasks: configure.yml
+
+- name: Configure Nagios NRPE service
+  include_tasks: service.yml

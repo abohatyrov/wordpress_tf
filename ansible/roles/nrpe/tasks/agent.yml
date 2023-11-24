@@ -1,0 +1,32 @@
+---
+- name: Configure Nagios NRPE Agent
+  command: ./configure --enable-command-args 
+  args:
+    chdir: /tmp/nrpe-nrpe-{{ nrpe_nrpe_version }}
+
+- name: Build Nagios NRPE Agent
+  command: make all
+  args:
+    chdir: /tmp/nrpe-nrpe-{{ nrpe_nrpe_version }}
+
+- name: Install Nagios NRPE Agent Groups and Users
+  command: make install-groups-users
+  args:
+    chdir: /tmp/nrpe-nrpe-{{ nrpe_nrpe_version }}
+
+- name: Install Nagios NRPE Agent
+  command: make install
+  args:
+    chdir: /tmp/nrpe-nrpe-{{ nrpe_nrpe_version }}
+
+- name: Install Nagios NRPE Agent Config
+  command: make install-config
+  args:
+    chdir: /tmp/nrpe-nrpe-{{ nrpe_nrpe_version }}
+
+- name: Initialize Nagios Agent
+  command: make install-init
+  args:
+    chdir: /tmp/nrpe-nrpe-{{ nrpe_nrpe_version }}
+  notify: Restart NRPE Service
+    

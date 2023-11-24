@@ -1,0 +1,11 @@
+---
+- name: Update services file with NRPE Service Name, Port and Protocol
+  lineinfile:
+    path: /etc/services
+    line: "nrpe            5666/tcp                # NRPE Service"
+
+- name: Disable SSL when running NRPE Agent 
+  replace:
+    path: /usr/lib/systemd/system/nrpe.service
+    regexp: '-f$'
+    replace: '-f -n'

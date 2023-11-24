@@ -1,0 +1,14 @@
+---
+- name: Start and Enable apache_exporter
+  service:
+    name: apache_exporter
+    state: started
+    enabled: yes
+    daemon_reload: yes
+  become: true
+
+- name: Restart apache_exporter
+  service:
+    name: apache_exporter
+    state: restarted
+    enabled: yes

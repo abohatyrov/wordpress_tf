@@ -3,6 +3,7 @@
   systemd:
     name: prometheus
     enabled: yes
+    daemon_reload: yes
     state: started
 
 - name: Restart Prometheus service

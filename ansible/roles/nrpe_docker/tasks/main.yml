@@ -1,4 +1,0 @@
----
-- include_tasks: install.yml
-- include_tasks: compile.yml
-- include_tasks: configure.yml

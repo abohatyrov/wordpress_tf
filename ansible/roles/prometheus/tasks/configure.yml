@@ -3,6 +3,6 @@
   template:
     src: prometheus.yml.j2
     dest: /etc/prometheus/prometheus.yml
-    owner: prometheus
-    group: prometheus
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
     mode: '0644'

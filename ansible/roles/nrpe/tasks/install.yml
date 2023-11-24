@@ -18,7 +18,7 @@
 
 - name: Download and Extract NRPE Plugins Source File 
   unarchive:
-    src: "https://github.com/nagios-plugins/nagios-plugins/releases/download/release-{{ plugin_version }}/nagios-plugins-{{ plugin_version }}.tar.gz"
+    src: "https://github.com/nagios-plugins/nagios-plugins/releases/download/release-{{ nrpe_plugin_version }}/nagios-plugins-{{ nrpe_plugin_version }}.tar.gz"
     dest: /tmp
     remote_src: yes
     validate_certs: no

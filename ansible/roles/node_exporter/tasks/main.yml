@@ -1,0 +1,12 @@
+---
+- name: Install node_exporter
+  include_tasks: install.yml
+
+- name: Create user for node_exporter
+  include_tasks: user.yml
+
+- name: Configure node_exporter
+  include_tasks: binary.yml
+
+- name: Create node_exporter service
+  include_tasks: service.yml

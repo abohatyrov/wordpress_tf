@@ -1,0 +1,15 @@
+---
+- name: Configure Nagios NRPE Plugins
+  command: ./configure --enable-command-args
+  args:
+    chdir: /tmp/nagios-plugins-{{ nrpe_plugin_version }}
+
+- name: Build Nagios NRPE Plugins
+  command: make all
+  args:
+    chdir: /tmp/nagios-plugins-{{ nrpe_plugin_version }}
+
+- name: Install Nagios NRPE Plugins
+  command: make install
+  args:
+    chdir: /tmp/nagios-plugins-{{ nrpe_plugin_version }}

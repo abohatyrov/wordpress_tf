@@ -1,11 +1,4 @@
 ---
-- name: Download and Extract Nagios Plugins
-  ansible.builtin.unarchive:
-    src: "https://github.com/nagios-plugins/nagios-plugins/archive/release-{{ nagios_plugins_version }}.tar.gz"
-    dest: "/tmp"
-    remote_src: yes
-    validate_certs: no
-    creates: "/tmp/nagios-plugins-release-{{ nagios_plugins_version }}"
 
 - name: Sutup Nagios Plugins
   command: "./tools/setup"
@@ -27,5 +20,5 @@
   args:
     chdir: "/tmp/nagios-plugins-release-{{ nagios_plugins_version }}"
   notify:
-    - restart apache 
-    - restart nagios  
+    - Restart Apache
+    - Restart Nagios

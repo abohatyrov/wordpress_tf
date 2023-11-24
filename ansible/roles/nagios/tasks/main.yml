@@ -1,7 +1,18 @@
 ---
-- include_tasks: install.yml
-- include_tasks: configure.yml
-- include_tasks: compile.yml
-- include_tasks: admin.yml
-- include_tasks: plugins.yml
-- include_tasks: nrpe.yml
+- name: Install Nagios Core and Plugins
+  include_tasks: install.yml
+
+- name: Configure Apache Web Server
+  include_tasks: configure.yml
+
+- name: Build and Install Nagios Core
+  include_tasks: compile.yml
+
+- name: Create Nagios Admin User
+  include_tasks: admin.yml
+
+- name: Build and Install Nagios Plugins
+  include_tasks: plugins.yml
+
+- name: Configure Nagios Core to use NRPE
+  include_tasks: nrpe.yml

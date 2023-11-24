@@ -1,5 +1,5 @@
 ---
-- name: Compile Nagios Core
+- name: Configure Nagios Core
   command: "./configure --with-httpd-conf=/etc/httpd/conf.d"
   args:
     chdir: "/tmp/nagios-{{ nagios_version }}"
@@ -29,12 +29,6 @@
   command: make install-daemoninit
   args:
     chdir: "/tmp/nagios-{{ nagios_version }}"
-  notify: restart apache
-
-- name: Enable httpd service
-  systemd:
-    name: httpd.service
-    enabled: yes
 
 - name: Install Nagios Command Mode
   command: "make install-commandmode"
@@ -50,14 +44,6 @@
   command: "make install-webconf"
   args:
     chdir: "/tmp/nagios-{{ nagios_version }}"
-  notify: restart apache
-
-- name: restart apache
-  service:
-    name: httpd
-    state: restarted
-
-- name: restart nagios
-  service:
-    name: nagios
-    state: restarted
+  notify: 
+    - Restart Apache
+    - Restart Nagios

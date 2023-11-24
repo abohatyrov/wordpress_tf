@@ -4,10 +4,14 @@
   user: ec2-user
   become: yes
   vars_files:
-    - groups_vars/all/vars.yml
+    - mysql
+    - wordpress
+    - nagios
+    - prometheus
 
   roles:
     - mysql
     - wordpress
-    # - nrpe
-
+    - nrpe
+    - node_exporter
+    - apache_exporter

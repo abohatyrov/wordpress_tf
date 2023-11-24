@@ -1,0 +1,6 @@
+---
+- name: Add configuration to Apache
+  template:
+    src: prometheus.conf.j2
+    dest: /etc/httpd/conf.d/server-status.conf
+  notify: Restart Apache
