@@ -1,0 +1,7 @@
+LoadModule prometheus_module modules/mod_prometheus.so
+
+<Location "/metrics">
+    SetHandler prometheus
+    Order allow,deny
+    Allow from all
+</Location>

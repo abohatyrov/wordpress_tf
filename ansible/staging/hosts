@@ -1,12 +1,12 @@
 [wordpress]
-wp_server1 ansible_host=54.163.215.113
+wp_server1 ansible_host=18.212.102.16
 
 [nagios]
-ng_server1 ansible_host=3.85.14.126
+ng_server1 ansible_host=34.204.108.111
 
 [prometheus]
-pr_server1 ansible_host=18.212.243.222
+pr_server1 ansible_host=100.26.48.161
 
 [docker]
-dk_server1 ansible_host=18.208.189.115
+dk_server1 ansible_host=3.92.32.170	
 

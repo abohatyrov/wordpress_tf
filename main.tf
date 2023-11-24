@@ -7,6 +7,7 @@ module "wordpress_ec2" {
 
   sg_name  = "wordpress-sg"
   icmp     = true
+  add_ports = [9100]
   key_name = "wordpress"
   key_path = "${path.module}/.ssh/id_rsa.pub"
 }

@@ -1,5 +1,4 @@
 ---
-
 - name: Extract Wordpress
   unarchive:
     src: https://wordpress.org/latest.tar.gz
@@ -8,15 +7,9 @@
 
 - name: Set up Apache VirtualHost
   template:
-    src: "httpd.conf.j2"
-    dest: "/etc/httpd/conf/httpd.conf "
+    src: "wordpress.conf.j2"
+    dest: "/etc/httpd/conf.d/wordpress.conf"
   notify: Restart Apache
-
-# - name: Copy sample config file
-#   copy:
-#     src: /var/www/html/wordpress/wp-config-sample.php
-#     dest: /var/www/html/wordpress/wp-config.php
-#     remote_src: yes
 
 - name: Wordpress | Copy wp-config.php file content
   template:  
@@ -24,6 +17,13 @@
     dest: "/var/www/html/wordpress/wp-config.php"
   notify:
     - Restart Apache
+
+- name: Start and Enable Apache
+  service:
+    name: 'httpd'
+    state: started
+    enabled: yes
+  become: true
 
 - name: Ensure SELinux allows web server to write to WordPress
   seboolean:

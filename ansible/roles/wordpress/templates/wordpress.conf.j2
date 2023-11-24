@@ -1,0 +1,17 @@
+<VirtualHost *:80>
+    ServerAdmin ec2-user@localhost
+    DocumentRoot /var/www/html
+    ErrorLog /etc/httpd/logs/error.log
+    CustomLog /etc/httpd/logs/access.log combined
+
+    <Directory /var/www/html>
+          Options -Indexes
+          AllowOverride All
+    </Directory>
+
+    <IfModule mod_dir.c>
+        DirectoryIndex index.php index.html index.cgi index.pl  index.xhtml index.htm
+    </IfModule>
+</VirtualHost>
+
+ExtendedStatus On
