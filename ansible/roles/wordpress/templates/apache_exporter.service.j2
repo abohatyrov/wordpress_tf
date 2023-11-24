@@ -1,10 +1,14 @@
 [Unit]
-Description=Apache Exporter
+Description=Prometheus Apache Exporter
+Wants=network.target
+After=network.target
 
 [Service]
 User=apache_exporter
-EnvironmentFile=/etc/sysconfig/apache_exporter
-ExecStart=/usr/local/bin/apache_exporter $OPTIONS
+Group=apache_exporter
+Type=simple
+ExecStart=/usr/local/bin/apache_exporter
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

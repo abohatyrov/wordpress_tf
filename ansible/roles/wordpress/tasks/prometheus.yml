@@ -22,6 +22,12 @@
     mode: 0755
     remote_src: yes
 
+- name: Create node_exporter service file
+  template:
+    src: node_exporter.service.j2
+    dest: /etc/systemd/system/node_exporter.service
+  become: true
+
 - name: Run node_exporter as a service
   systemd:
     name: node_exporter
@@ -30,59 +36,23 @@
     daemon_reload: yes
   become: true
 
-- name: Install Go from source
+- name: Install Apace Exporter
   unarchive:
-    src: https://dl.google.com/go/go{{ go_version }}.linux-amd64.tar.gz
-    dest: /usr/local
+    src: https://github.com/Lusitaniae/apache_exporter/releases/download/v0.5.0/apache_exporter-0.5.0.linux-amd64.tar.gz
+    dest: /tmp
     remote_src: yes
-  become: true
 
-- name: Export Go path
-  lineinfile:
-    path: /etc/profile
-    line: 'export PATH=$PATH:/usr/local/go/bin'
-    state: present
-    create: yes
-  become: true
-
-- name: Export PATH
-  lineinfile:
-    path: /etc/profile
-    line: 'export PATH=$PATH:/usr/local/go/bin'
-    state: present
-    create: yes
-  become: true
-
-- name: Create user for Apache exporter
-  user:
-    name: apache_exporter
-    shell: /sbin/nologin
-    system: yes
-    state: present
-  become: true
-
-- name: Download Apache exporter
-  command: go get -v github.com/Lusitaniae/apache_exporter
-  args:
-    chdir: /tmp
-
-- name: Copy Apache exporter binary
+- name: Copy apache_exporter binary
   copy:
-    src: /tmp/go/bin/apache_exporter
+    src: /tmp/apache_exporter-0.5.0.linux-amd64/apache_exporter
     dest: /usr/local/bin/apache_exporter
     mode: 0755
     remote_src: yes
 
-- name: Create Apache exporter service file
+- name: Create apache_exporter service file
   template:
     src: apache_exporter.service.j2
     dest: /etc/systemd/system/apache_exporter.service
-  become: true
-
-- name: Create sysconfig file for Apache exporter
-  template:
-    src: apache_exporter.j2
-    dest: /etc/sysconfig/apache_exporter
   become: true
 
 - name: Run Apache exporter as a service

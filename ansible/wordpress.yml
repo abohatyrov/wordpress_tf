@@ -9,5 +9,5 @@
   roles:
     - mysql
     - wordpress
-    - nrpe
+    # - nrpe
 
