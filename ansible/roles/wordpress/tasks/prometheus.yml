@@ -1,4 +1,94 @@
 ---
+- name: Configure Apache
+  template:
+    src: prometheus.conf.j2
+    dest: /etc/httpd/conf.d/server-status.conf
+
+- name: Restart Apache
+  service:
+    name: httpd
+    state: restarted
+
 - name: Install Node Exporter
   unarchive:
     src: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz
+    dest: /tmp
+    remote_src: yes
+
+- name: Copy node_exporter binary
+  copy:
+    src: /tmp/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter
+    dest: /usr/local/bin/node_exporter
+    mode: 0755
+    remote_src: yes
+
+- name: Run node_exporter as a service
+  systemd:
+    name: node_exporter
+    state: started
+    enabled: yes
+    daemon_reload: yes
+  become: true
+
+- name: Install Go from source
+  unarchive:
+    src: https://dl.google.com/go/go{{ go_version }}.linux-amd64.tar.gz
+    dest: /usr/local
+    remote_src: yes
+  become: true
+
+- name: Export Go path
+  lineinfile:
+    path: /etc/profile
+    line: 'export PATH=$PATH:/usr/local/go/bin'
+    state: present
+    create: yes
+  become: true
+
+- name: Export PATH
+  lineinfile:
+    path: /etc/profile
+    line: 'export PATH=$PATH:/usr/local/go/bin'
+    state: present
+    create: yes
+  become: true
+
+- name: Create user for Apache exporter
+  user:
+    name: apache_exporter
+    shell: /sbin/nologin
+    system: yes
+    state: present
+  become: true
+
+- name: Download Apache exporter
+  command: go get -v github.com/Lusitaniae/apache_exporter
+  args:
+    chdir: /tmp
+
+- name: Copy Apache exporter binary
+  copy:
+    src: /tmp/go/bin/apache_exporter
+    dest: /usr/local/bin/apache_exporter
+    mode: 0755
+    remote_src: yes
+
+- name: Create Apache exporter service file
+  template:
+    src: apache_exporter.service.j2
+    dest: /etc/systemd/system/apache_exporter.service
+  become: true
+
+- name: Create sysconfig file for Apache exporter
+  template:
+    src: apache_exporter.j2
+    dest: /etc/sysconfig/apache_exporter
+  become: true
+
+- name: Run Apache exporter as a service
+  systemd:
+    name: apache_exporter
+    state: started
+    enabled: yes
+    daemon_reload: yes
+  become: true

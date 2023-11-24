@@ -1,7 +1,6 @@
-LoadModule prometheus_module modules/mod_prometheus.so
-
-<Location "/metrics">
-    SetHandler prometheus
-    Order allow,deny
+ExtendedStatus on
+<Location /server-status>
+    SetHandler server-status
+    Order deny,allow
     Allow from all
 </Location>
