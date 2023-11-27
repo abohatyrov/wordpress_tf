@@ -54,7 +54,7 @@ module "prometheus_ec2" {
 module "cadvisor_container" {
   source = "./modules/docker"
 
-  image          = "cadvisor"
+  image          = "google/cadvisor"
   tag            = "latest"
   container_name = "cadvisor"
   
