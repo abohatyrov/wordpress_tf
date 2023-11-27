@@ -15,9 +15,8 @@ module "wordpress_ec2" {
 module "apache_container" {
   source = "./modules/docker"
 
-  image          = "apache"
+  image          = "public.ecr.aws/a4k5j2i3/apache"
   tag            = "latest"
-  build_context  = "/home/ec2-user/wordpress_tf/docker"
   container_name = "apache-container"
   
   ports = [
