@@ -3,9 +3,6 @@
   hosts: nagios
   user: ec2-user
   become: yes
-  vars_files:
-    - nagios
-
   roles:
     - nagios
     - nrpe

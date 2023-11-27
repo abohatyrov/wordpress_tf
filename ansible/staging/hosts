@@ -1,14 +1,14 @@
 [wordpress]
-wp_server1 ansible_host=18.212.236.231
+wp_server1 ansible_host=54.227.174.2
 
 [nagios]
 ng_server1 ansible_host=3.90.105.228
 
 [prometheus]
-pr_server1 ansible_host=54.145.32.209
+pr_server1 ansible_host=54.234.135.247
 
 [docker]
-dk_server1 ansible_host=3.92.32.170	
+dk_server1 ansible_host=34.230.5.136	
 
 [all:vars]
 ansible_ssh_private_key_file=./.ssh/id_rsa

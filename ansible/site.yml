@@ -5,8 +5,8 @@
 - name: Configure Docker server with NRPE and docker_exporter
   import_playbook: docker.yml
 
-- name: Configure Nagios server with NRPE
-  import_playbook: nagios.yml
+# - name: Configure Nagios server with NRPE
+#   import_playbook: nagios.yml
 
 - name: Configure Prometheus server
   import_playbook: prometheus.yml

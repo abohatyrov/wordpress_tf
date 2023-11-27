@@ -3,9 +3,9 @@
   hosts: docker
   user: ec2-user
   become: yes
-  vars_files:
-    - nagios
 
   roles:
-    - nrpe
-    - docker_exporter
+    # - nrpe
+    # - node_exporter
+    # - docker_exporter
+    - apache_exporter

@@ -3,15 +3,10 @@
   hosts: wordpress
   user: ec2-user
   become: yes
-  vars_files:
-    - mysql
-    - wordpress
-    - nagios
-    - prometheus
 
   roles:
     - mysql
     - wordpress
-    - nrpe
+    # - nrpe
     - node_exporter
     - apache_exporter
