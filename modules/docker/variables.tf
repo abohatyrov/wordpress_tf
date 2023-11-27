@@ -29,7 +29,7 @@ variable "ports" {
 
 variable "build_context" {
   description = "The build context of the Docker image"
-  default     = "../../docker"
+  default     = ""
   type        = string
 }
 

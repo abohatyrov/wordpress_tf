@@ -2,8 +2,13 @@ resource "docker_image" "this" {
   name         = "${var.image}:${var.tag}"
   keep_locally = false
   
-  build {
-    context = var.build_context
+  dynamic "build" {
+    for_each = var.build_context != "" ? [1] : []
+    content {
+      context    = var.build_context
+      dockerfile = "${var.build_context}/Dockerfile"
+    }
+    
   }
 }
 
