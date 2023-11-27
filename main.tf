@@ -17,7 +17,7 @@ module "apache_container" {
 
   image          = "apache"
   tag            = "latest"
-  build_context  = "${path.module}/docker"
+  build_context  = "/home/ec2-user/wordpress_tf/docker"
   container_name = "apache-container"
   
   ports = [
