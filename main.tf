@@ -50,3 +50,21 @@ module "prometheus_ec2" {
   key_name  = "prom"
   key_path  = "${path.module}/.ssh/id_rsa.pub"
 }
+
+module "cadvisor_container" {
+  source = "./modules/docker"
+
+  image          = "cadvisor"
+  tag            = "latest"
+  container_name = "cadvisor"
+  
+  ports = [
+    { internal = 8080, external = 9182 }
+  ]
+  
+  volumes = [
+    { host_path = "/var/run", container_path = "/var/run", read_only = false },
+    { host_path = "/sys", container_path = "/sys", read_only = true },
+    { host_path = "/", container_path = "/rootfs", read_only = true }
+  ]
+}

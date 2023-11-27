@@ -32,3 +32,13 @@ variable "build_context" {
   default     = "../../docker"
   type        = string
 }
+
+variable "volumes" {
+  description = "The volumes to mount"
+  default     = []
+  type        = list(object({
+    host_path      = string
+    container_path = string
+    read_only      = bool
+  }))
+}
