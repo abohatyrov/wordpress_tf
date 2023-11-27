@@ -16,14 +16,19 @@ variable "container_name" {
   type        = string
 }
 
-variable "internal_port" {
-  description = "The internal port of the Docker container"
-  default     = 80
-  type        = number
+variable "ports" {
+  description = "The ports to expose"
+  default     = [
+    { internal = 80, external = 8080 }
+  ]
+  type        = list(object({
+    internal = number
+    external = number
+  }))
 }
 
-variable "external_port" {
-  description = "The external port of the Docker container"
-  default     = 8080
-  type        = number
+variable "build_context" {
+  description = "The build context of the Docker image"
+  default     = "../../docker"
+  type        = string
 }

@@ -15,11 +15,15 @@ module "wordpress_ec2" {
 module "apache_container" {
   source = "./modules/docker"
 
-  image          = "httpd"
+  image          = "apache"
   tag            = "latest"
+  build_context  = "${path.module}/docker"
   container_name = "apache-container"
-  internal_port  = 80
-  external_port  = 8080
+  
+  ports = [
+    { internal = 80, external = 8080 },
+    { internal = 9117, external = 9117 }
+  ]
 }
 
 module "nagios_ec2" {
