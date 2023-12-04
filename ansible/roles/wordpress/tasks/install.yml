@@ -1,19 +1,20 @@
 ---
-- name: Update the system
-  dnf:
-    name: '*'
-    state: latest
-    exclude: kernel*
+# - name: Update the system
+#   dnf:
+#     name: '*'
+#     state: latest
+#     exclude: kernel*
     
-- name: Install Dependencies
-  dnf:
-    name: "{{ item }}"
-    state: latest
-  loop: [ 'httpd', 'git', 'wget', 'httpd-devel', 'php', 'php-curl', 'php-gd', 'php-mbstring', 'php-xml', 'php-soap', 'php-intl', 'php-zip', 'php-mysqlnd' ]
-  notify: Start and Enable Apache
+# - name: Install Dependencies
+#   dnf:
+#     name: "{{ item }}"
+#     state: latest
+#   loop: [ 'httpd', 'wget', 'httpd-devel', 'php', 'php-curl', 'php-gd', 'php-mbstring', 'php-xml', 'php-soap', 'php-intl', 'php-zip', 'php-mysqlnd' ]
+#   notify: Start and Enable Apache
 
 - name: Extract Wordpress
   unarchive:
     src: https://wordpress.org/latest.tar.gz
     dest: /var/www/html
     remote_src: yes
+  notify: Start and Enable Apache

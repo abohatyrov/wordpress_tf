@@ -18,10 +18,10 @@ variable "container_name" {
 
 variable "ports" {
   description = "The ports to expose"
-  default     = [
+  default = [
     { internal = 80, external = 8080 }
   ]
-  type        = list(object({
+  type = list(object({
     internal = number
     external = number
   }))
@@ -36,9 +36,21 @@ variable "build_context" {
 variable "volumes" {
   description = "The volumes to mount"
   default     = []
-  type        = list(object({
+  type = list(object({
     host_path      = string
     container_path = string
     read_only      = bool
   }))
+}
+
+variable "docker_host_ip" {
+  description = "The IP address of the Docker host"
+  default     = "127.0.0.1"
+  type        = string
+}
+
+variable "docker_depends_on" {
+  default     = []
+  type        = list(string)
+  description = "Additional dependencies for the EC2 instance"
 }

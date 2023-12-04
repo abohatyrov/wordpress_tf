@@ -12,12 +12,12 @@ terraform {
 }
 
 provider "aws" {
-  region = var.region
-
   shared_config_files      = [".aws/config"]
   shared_credentials_files = [".aws/credentials"]
   profile                  = "default"
 }
 
-provider "docker" {}
+provider "docker" {
+  host = "tcp://${module.docker_ec2.public_ip}:2376"
+}
 

@@ -1,0 +1,6 @@
+---
+# - name: Install Docker
+#   include_tasks: install.yml
+
+- name: Configure Docker
+  include_tasks: service.yml

@@ -1,7 +1,7 @@
 ---
 - name: Install and Launch Wordpress 
   hosts: wordpress
-  user: ec2-user
+  user: ansible
   become: yes
 
   roles:

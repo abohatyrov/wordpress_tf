@@ -1,0 +1,14 @@
+plugin: amazon.aws.aws_ec2
+regions:
+  - us-east-1
+
+filters:
+  instance-state-name: running
+  tag:Ansible: true
+
+keyed_groups:
+  - key: tags.Application
+    separator: ''
+
+compose:
+  ansible_host: public_dns_name

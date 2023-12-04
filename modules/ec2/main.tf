@@ -1,36 +1,5 @@
-resource "aws_security_group" "wordpress" {
+resource "aws_security_group" "this" {
   name = var.sg_name
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    from_port   = 3306
-    to_port     = 3306
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    from_port   = 5666
-    to_port     = 5666
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 
   dynamic "ingress" {
     for_each = var.add_ports
@@ -58,26 +27,40 @@ resource "aws_security_group" "wordpress" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    Terraform = true
+  }
+
+  lifecycle {
+    ignore_changes = [
+      tags,
+    ]
+  }
+
+  depends_on = [var.ec2_depends_on]
 }
 
-resource "aws_key_pair" "wordpress" {
-  key_name   = var.key_name
-  public_key = file(var.key_path)
-}
-
-resource "aws_instance" "wordpress" {
+resource "aws_instance" "this" {
   ami             = var.ami
   instance_type   = var.instance_type
-  security_groups = [aws_security_group.wordpress.name]
+  security_groups = [aws_security_group.this.name]
 
-  key_name = aws_key_pair.wordpress.key_name
-#  private_ip = "172.31.42.242"
+  key_name = var.key_name
+
+  iam_instance_profile = var.iam_role
 
   root_block_device {
     volume_size = 20
   }
 
-  tags = {
-    Name = var.instance_name
+  tags = var.tags
+
+  lifecycle {
+    ignore_changes = [
+      tags,
+    ]
   }
+
+  depends_on = [aws_security_group.this]
 }

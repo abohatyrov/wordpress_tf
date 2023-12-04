@@ -1,0 +1,25 @@
+---
+- name: Update all packages to the latest version
+  yum:
+    name: '*'
+    state: latest
+
+- name: Installing Docker Prerequisite packages
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - yum-utils
+
+- name: Docker repo
+  yum_repository:
+    name: docker
+    description: repo for docker
+    baseurl: https://download.docker.com/linux/centos/9/x86_64/stable/
+    gpgcheck: no
+
+- name: Installing Docker latest version
+  yum:
+    name: docker-ce
+    state: latest
+  notify: Start and Enable Docker

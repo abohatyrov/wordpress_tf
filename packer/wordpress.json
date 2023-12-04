@@ -1,0 +1,38 @@
+{
+  "variables": {
+      "ami_name_prefix": "wp"
+  },
+  "builders": [{
+      "ami_description": "An AMI with dependencies for Wordpress, based on RHEL.",
+      "ami_name": "{{user `ami_name_prefix`}}-{{isotime | clean_resource_name}}",
+      "instance_type": "t2.micro",
+      "region": "{{user `region`}}",
+      "source_ami_filter": {
+          "filters": {
+              "architecture": "x86_64",
+              "block-device-mapping.volume-type": "gp2",
+              "name": "RHEL-9.3.0_HVM-20231101-x86_64-5-Hourly2-GP2",
+              "root-device-type": "ebs",
+              "virtualization-type": "hvm"
+          },
+          "most_recent": true,
+          "owners": [
+              "309956199498"
+          ]
+      },
+      "ssh_username": "ec2-user",
+      "type": "amazon-ebs"
+  }],
+  "provisioners": [{
+          "inline": [
+              "echo 'Sleeping for 30 seconds to give RHEL enough time to initialize (otherwise, packages may fail to install).'",
+              "sleep 30",
+              "sudo dnf update -y",
+              "sudo dnf install -y mysql mysql-server python3-PyMySQL python3-firewall httpd wget httpd-devel php php-curl php-gd php-mbstring php-xml php-soap php-intl php-zip php-mysqlnd",
+              "sudo adduser -m -p ansible ansible",
+              "sudo usermod -aG wheel ansible"
+          ],
+          "type": "shell"
+      }
+  ]
+}

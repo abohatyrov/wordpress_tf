@@ -1,15 +1,16 @@
 resource "docker_image" "this" {
   name         = "${var.image}:${var.tag}"
   keep_locally = false
-  
+
   dynamic "build" {
     for_each = var.build_context != "" ? [1] : []
     content {
       context    = var.build_context
       dockerfile = "${var.build_context}/Dockerfile"
     }
-    
   }
+
+  depends_on = [var.docker_depends_on]
 }
 
 resource "docker_container" "this" {
@@ -34,4 +35,6 @@ resource "docker_container" "this" {
       read_only      = volumes.value.read_only
     }
   }
+
+  depends_on = [docker_image.this]
 }

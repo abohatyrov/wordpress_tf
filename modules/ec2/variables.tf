@@ -10,23 +10,12 @@ variable "key_name" {
   description = "The name of the SSH key to use"
 }
 
-variable "key_path" {
-  default     = "~/.ssh/id_rsa.pub"
-  type        = string
-  description = "The path to the SSH key to use"
-}
-
-variable "instance_name" {
-  default     = "wordpress-instance-1"
-  type        = string
-  description = "The name of the EC2 instance"
-}
-
 variable "ami" {
   default     = "ami-05a5f6298acdb05b6"
   type        = string
   description = "The AMI to use for the EC2 instance"
 }
+
 variable "instance_type" {
   default     = "t2.micro"
   type        = string
@@ -40,13 +29,30 @@ variable "sg_name" {
 }
 
 variable "icmp" {
-  default = false
-  type    = bool
+  default     = false
+  type        = bool
   description = "Whether to allow ICMP traffic"
 }
 
 variable "add_ports" {
-  default = []
-  type    = list(number)
+  default     = []
+  type        = list(number)
   description = "Additional ports to open"
+}
+
+variable "tags" {
+  default     = { Name = "wordpress-instance-1" }
+  type        = map(string)
+  description = "Additional tags to add to the EC2 instance"
+}
+
+variable "ec2_depends_on" {
+  default     = []
+  type        = list(string)
+  description = "Additional dependencies for the EC2 instance"
+}
+
+variable "iam_role" {
+  type = string
+  default = ""
 }
