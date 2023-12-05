@@ -1,0 +1,12 @@
+---
+- name: Enable Alert Manager service
+  systemd:
+    name: alertmanager
+    enabled: yes
+    daemon_reload: yes
+    state: started
+
+- name: Restart Alert Manager service
+  systemd:
+    name: alertmanager
+    state: restarted

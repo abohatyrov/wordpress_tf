@@ -1,7 +1,7 @@
 ---
 - name: Install NRPE on Docker Hosts 
   hosts: docker
-  user: ansible
+  user: ec2-user
   become: yes
 
   roles:

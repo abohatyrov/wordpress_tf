@@ -1,0 +1,14 @@
+route:
+    receiver: telegram
+
+receivers:
+  - name: 'telegram'
+    telegram_configs:
+    - bot_token: {{ telegram_api_token }}
+      api_url: https://api.telegram.org
+      chat_id: {{ telegram_chat_id }}
+      parse_mode: 'HTML'
+      message: '{% raw %}{{ template "telegram.default.text" . }}{% endraw %}'
+
+templates:
+  - '/etc/alertmanager/templates/alertmanager.tmpl'

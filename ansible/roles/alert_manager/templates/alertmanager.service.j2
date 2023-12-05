@@ -1,0 +1,12 @@
+[Unit]
+Description=Alertmanager service
+After=network.target
+
+[Service]
+User={{ alert_manager_user }}
+Group={{ alert_manager_group }}
+WorkingDirectory=/etc/alertmanager
+ExecStart=/usr/local/bin/alertmanager --config.file=/etc/alertmanager/config.yml
+
+[Install]
+WantedBy=multi-user.target

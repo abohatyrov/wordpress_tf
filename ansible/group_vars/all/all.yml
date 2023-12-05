@@ -36,3 +36,10 @@ apache_exporter_version: "{{ lookup('amazon.aws.aws_secret', 'dev/ansible/promet
 node_exporter_version: "{{ lookup('amazon.aws.aws_secret', 'dev/ansible/prometheus.node_exporter_version', nested=true) }}"
 node_exporter_user: "{{ lookup('amazon.aws.aws_secret', 'dev/ansible/prometheus.node_exporter_user', nested=true) }}"
 node_exporter_group: "{{ lookup('amazon.aws.aws_secret', 'dev/ansible/prometheus.node_exporter_group', nested=true) }}"
+
+alert_manager_version: "{{ lookup('amazon.aws.aws_secret', 'dev/ansible/prometheus.alert_manager_version', nested=true) }}"
+alert_manager_user: "{{ lookup('amazon.aws.aws_secret', 'dev/ansible/prometheus.alert_manager_user', nested=true) }}"
+alert_manager_group: "{{ lookup('amazon.aws.aws_secret', 'dev/ansible/prometheus.alert_manager_group', nested=true) }}"
+alert_manager_checksum: "{{ lookup('amazon.aws.aws_secret', 'dev/ansible/prometheus.alert_manager_checksum', nested=true) }}"
+telegram_api_token: "{{ lookup('amazon.aws.aws_secret', 'dev/ansible/prometheus.telegram_api_token', nested=true) }}"
+telegram_chat_id: "{{ lookup('amazon.aws.aws_secret', 'dev/ansible/prometheus.telegram_chat_id', nested=true) }}"

@@ -1,0 +1,27 @@
+---
+- name: Download and Extract Alertmanager
+  unarchive:
+    src: https://github.com/prometheus/alertmanager/releases/download/v{{ alert_manager_version }}/alertmanager-{{ alert_manager_version }}.linux-amd64.tar.gz
+    dest: /tmp/
+    owner: "{{ alert_manager_user }}"
+    group: "{{ alert_manager_group }}"
+    mode: 0755
+    remote_src: true
+
+- name: Copy alertmanager binary
+  copy:
+    src: /tmp/alertmanager-{{ alert_manager_version }}.linux-amd64/alertmanager
+    dest: /usr/local/bin/alertmanager
+    owner: "{{ alert_manager_user }}"
+    group: "{{ alert_manager_group }}"
+    mode: 0755
+    remote_src: yes
+
+- name: Copy amtool binary
+  copy:
+    src: /tmp/alertmanager-{{ alert_manager_version }}.linux-amd64/amtool
+    dest: /usr/local/bin/amtool
+    owner: "{{ alert_manager_user }}"
+    group: "{{ alert_manager_group }}"
+    mode: 0755
+    remote_src: yes

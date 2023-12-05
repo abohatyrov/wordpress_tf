@@ -30,9 +30,7 @@
               "sudo dnf update -y",
               "sudo dnf install -y yum-utils",
               "sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo",
-              "sudo dnf install -y docker-ce",
-              "sudo adduser -m -p ansible ansible",
-              "sudo usermod -aG wheel ansible"
+              "sudo dnf install -y docker-ce"
           ],
           "type": "shell"
       }

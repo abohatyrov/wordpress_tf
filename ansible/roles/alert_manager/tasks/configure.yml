@@ -1,0 +1,30 @@
+---
+- name: Create Alertmanager configuration directory
+  file:
+    path: /etc/alertmanager
+    state: directory
+  notify: Restart Alert Manager service
+
+- name: Create Alertmanager configuration file
+  template:
+    src: alertmanager.yml.j2
+    dest: /etc/alertmanager/config.yml
+  notify: Restart Alert Manager service
+
+- name: Create Alertmanager rules file
+  template:
+    src: alert.rules.yml.j2
+    dest: /etc/prometheus/alert.rules.yml
+  notify: Restart Alert Manager service
+
+- name: Create Alertmanager templates directory
+  file:
+    path: /etc/alertmanager/templates
+    state: directory
+  notify: Restart Alert Manager service
+
+- name: Create Alertmanager template
+  template:
+    src: alertmanager.tmpl.j2
+    dest: /etc/alertmanager/templates/alertmanager.tmpl
+  notify: Restart Alert Manager service

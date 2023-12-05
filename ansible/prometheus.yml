@@ -1,6 +1,8 @@
 - name: Install and Configure Prometheus
   hosts: prometheus
-  user: ansible
+  user: ec2-user
   become: 'yes'
+
   roles:
     - prometheus
+    - alert_manager

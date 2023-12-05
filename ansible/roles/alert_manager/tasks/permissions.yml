@@ -1,0 +1,13 @@
+---
+- name: Add Alert Manager group
+  group:
+    name: "{{ alert_manager_group }}"
+    state: present
+
+- name: Add Alert Manager user
+  user:
+    name: "{{ alert_manager_user }}"
+    groups: ["{{ alert_manager_group }}", wheel]
+    shell: /bin/false
+    createhome: no
+

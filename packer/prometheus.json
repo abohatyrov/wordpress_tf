@@ -28,9 +28,7 @@
               "echo 'Sleeping for 30 seconds to give RHEL enough time to initialize (otherwise, packages may fail to install).'",
               "sleep 30",
               "sudo dnf update -y",
-              "sudo dnf install -y git wget",
-              "sudo adduser -m -p ansible ansible",
-              "sudo usermod -aG wheel ansible"
+              "sudo dnf install -y jq"
           ],
           "type": "shell"
       }
