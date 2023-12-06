@@ -12,4 +12,3 @@ keyed_groups:
 
 compose:
   ansible_host: public_dns_name
-  ansible_user: ec2-user
