@@ -115,13 +115,13 @@ module "prometheus_ec2" {
   }
 }
 
-module "apache_container" {
-  source = "./modules/docker"
+# module "apache_container" {
+#   source = "./modules/docker"
 
-  image          = local.secret["container_image"]
-  tag            = local.secret["container_tag"]
-  container_name = local.secret["container_name"]
-  docker_host_ip = module.docker_ec2.public_ip
+#   image          = local.secret["container_image"]
+#   tag            = local.secret["container_tag"]
+#   container_name = local.secret["container_name"]
+#   docker_host_ip = module.docker_ec2.public_ip
 
-  ports = nonsensitive(local.secret["container_ports"])
-}
+#   ports = nonsensitive(local.secret["container_ports"])
+# }

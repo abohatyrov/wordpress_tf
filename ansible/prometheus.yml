@@ -1,6 +1,5 @@
 - name: Install and Configure Prometheus
   hosts: prometheus
-  user: ec2-user
   become: 'yes'
 
   roles:
