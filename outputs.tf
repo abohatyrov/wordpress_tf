@@ -14,3 +14,11 @@ output "Docker_Public_IP" {
   description = "The public IP address of the EC2 instance"
   value       = module.docker_ec2.public_ip
 }
+output "Loki_Public_IP" {
+  description = "The public IP address of the EC2 instance"
+  value       = module.loki_ec2.public_ip
+}
+output "Grafana_Public_IP" {
+  description = "The public IP address of the EC2 instance"
+  value       = module.grafana_ec2.public_ip
+}

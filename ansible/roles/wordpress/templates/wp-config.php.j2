@@ -52,7 +52,11 @@ $table_prefix  = '{{ wordpress_table_prefix }}';
  * It is strongly recommended that plugin and theme developers use WP_DEBUG
  * in their development environments.
  */
-define('WP_DEBUG', {{ wordpress_debug|default('false') }});
+define('WP_DEBUG', true);
+define('WP_DEBUG_LOG', true);
+define('WP_DEBUG_DISPLAY', false);
+define('SCRIPT_DEBUG', true);
+define('SAVEQUERIES', true);
 
 /* That's all, stop editing! Happy blogging. */
 
@@ -62,6 +66,3 @@ if ( !defined('ABSPATH') )
 
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');
-
-define('WP_HOME', 'http://{{ public_dns_name }}/wordpress');
-define('WP_SITEURL', 'http://{{ public_dns_name }}/wordpress');

@@ -53,3 +53,15 @@ scrape_configs:
     relabel_configs:
       - source_labels: [__meta_ec2_tag_Name]
         target_label: instance
+
+  - job_name: 'goapp'
+    ec2_sd_configs:
+    - region: {{ placement['region'] }}
+      port: 8080
+      filters:
+        - name: tag:Name
+          values:
+          - go*
+    relabel_configs:
+      - source_labels: [__meta_ec2_tag_Name]
+        target_label: instance

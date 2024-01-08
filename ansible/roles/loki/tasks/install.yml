@@ -1,0 +1,25 @@
+---
+- name: Update the system
+  dnf:
+    name: '*'
+    state: latest
+
+- name: Install Loki dependencies
+  dnf:
+    name:
+      - unzip
+      - wget
+      - tar
+    state: latest
+
+- name: Unzip Loki binary
+  unarchive:
+    src: "https://github.com/grafana/loki/releases/download/v{{ loki_version }}/loki-linux-amd64.zip"
+    dest: "/usr/local/bin"
+    remote_src: yes
+
+- name: Rename Loki binary
+  command:
+    cmd: mv /usr/local/bin/loki-linux-amd64 /usr/local/bin/loki
+  args:
+    creates: /usr/local/bin/loki

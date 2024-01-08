@@ -1,0 +1,11 @@
+---
+- name: Create Loki config directory
+  file:
+    path: /etc/loki
+    state: directory
+
+- name: Add Loki config file
+  template:
+    src: loki-config.yml.j2
+    dest: /etc/loki/config.yml
+  notify: Restart Loki service

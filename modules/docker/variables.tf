@@ -54,3 +54,15 @@ variable "docker_depends_on" {
   type        = list(string)
   description = "Additional dependencies for the EC2 instance"
 }
+
+variable "loki_url" {
+  description = "The URL of the Loki server"
+  default     = ""
+  type        = string
+}
+
+variable "env" {
+  description = "The environment variables to set"
+  default     = []
+  type = list(string)
+}

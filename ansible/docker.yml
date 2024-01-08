@@ -7,3 +7,23 @@
     # - nrpe
     - docker
     - node_exporter
+    - promtail
+
+  vars:
+    jobs:
+    - job_name: "docker_container_logs"
+      config_type: "docker"
+      docker_host: "unix:///var/run/docker.sock"
+      refresh_interval: "5s"
+      relabel_configs:
+        - source_label: '__meta_docker_container_name'
+          regex: '/(.*)'
+          target_label: 'container_name'
+        - source_label: '__meta_docker_container_id'
+          regex: '(.*)'
+          target_label: 'container_id'
+        - source_label: '__meta_docker_container_log_stream'
+          regex: '(.*)'
+          target_label: 'logstream'
+
+          

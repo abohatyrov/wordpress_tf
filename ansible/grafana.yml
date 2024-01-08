@@ -1,0 +1,7 @@
+---
+- name: Install and Launch Grafana 
+  hosts: grafana
+  become: yes
+
+  roles:
+  - grafana

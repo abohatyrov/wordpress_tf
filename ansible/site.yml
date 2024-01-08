@@ -10,3 +10,9 @@
 
 - name: Configure Prometheus server
   import_playbook: prometheus.yml
+
+- name: Configure Loki server
+  import_playbook: loki.yml
+
+- name: Configure Grafana server
+  import_playbook: grafana.yml

@@ -13,7 +13,7 @@
 - name: Wordpress | Copy wp-config.php file content
   template:  
     src: wp-config.php.j2
-    dest: "/var/www/html/wordpress/wp-config.php"
+    dest: "/var/www/html/wp-config.php"
   notify: 
     - Start and Enable Apache
     - Restart Apache

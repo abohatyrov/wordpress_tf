@@ -9,3 +9,22 @@
     # - nrpe
     - node_exporter
     - apache_exporter
+    - promtail
+
+  vars:
+    jobs:
+    - job_name: "wordpress_logs"
+      config_type: "static"
+      target: "localhost"
+      job_label: "wordpress"
+      log_path: "/var/log/php-fpm/*.log"
+    - job_name: "mysql_logs"
+      config_type: "static"
+      target: "localhost"
+      job_label: "mysql"
+      log_path: "/var/log/mysql/*.log"
+    - job_name: "apache_logs"
+      config_type: "static"
+      target: "localhost"
+      job_label: "apache"
+      log_path: "/var/log/httpd/*.log"

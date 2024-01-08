@@ -23,3 +23,9 @@
     name: docker-ce
     state: latest
   notify: Start and Enable Docker
+
+- name: Start and Enable Docker
+  systemd:
+    name: docker
+    state: started
+    enabled: yes

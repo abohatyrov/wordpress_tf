@@ -1,0 +1,28 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+clients:
+  - url: http://{{ groups['loki'][0] }}:3100/loki/api/v1/push
+
+scrape_configs:
+{% for job in jobs %}
+  - job_name: "{{ job.job_name }}"
+{% if job.config_type == 'static' %}
+    static_configs:
+      - targets: ["{{ job.target }}"]
+        labels:
+          job: "{{ job.job_label }}"
+          __path__: "{{ job.log_path }}"
+{% elif job.config_type == 'docker' %}
+    docker_sd_configs:
+      - host: "{{ job.docker_host }}"
+        refresh_interval: "{{ job.refresh_interval }}"
+    relabel_configs:
+{% for label in job.relabel_configs %}
+      - source_labels: ["{{ label.source_label }}"]
+        regex: "{{ label.regex | default(omit) }}"
+        target_label: "{{ label.target_label | default(omit) }}"
+{% endfor %}
+{% endif %}
+{% endfor %}

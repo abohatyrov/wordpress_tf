@@ -1,0 +1,8 @@
+[Unit]
+Description=Loki logging service
+
+[Service]
+ExecStart=/usr/local/bin/loki -config.file=/etc/loki/config.yml
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,40 @@
+---
+- name: Create Grafana installation directory
+  file:
+    path: "/etc/grafana"
+    state: directory
+    owner: grafana
+    group: grafana
+    mode: '0750'
+    
+- name: Create Grafana data directory
+  file:
+    path: /var/lib/grafana
+    state: directory
+    owner: grafana
+    group: grafana
+    mode: '0750'
+
+- name: Create Grafana log directory
+  file:
+    path: /var/log/grafana
+    state: directory
+    owner: grafana
+    group: grafana
+    mode: '0750'
+
+- name: Create Grafana plugins directory
+  file:
+    path: /var/lib/grafana/plugins
+    state: directory
+    owner: grafana
+    group: grafana
+    mode: '0750'
+
+- name: Create Grafana datasources directory
+  file:
+    path: /etc/grafana/provisioning/datasources
+    state: directory
+    owner: grafana
+    group: grafana
+    mode: '0755'

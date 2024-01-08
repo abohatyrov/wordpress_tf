@@ -19,6 +19,13 @@ resource "docker_container" "this" {
 
   restart = "always"
 
+  # log_driver = "loki"
+  # log_opts = {
+  #   "loki-url" = var.loki_url
+  # }
+
+  env = var.env
+
   dynamic "ports" {
     for_each = var.ports
     content {

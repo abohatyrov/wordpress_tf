@@ -1,0 +1,7 @@
+---
+- name: Install and Launch Loki 
+  hosts: loki
+  become: yes
+
+  roles:
+  - loki

@@ -115,13 +115,65 @@ module "prometheus_ec2" {
   }
 }
 
-# module "apache_container" {
-#   source = "./modules/docker"
+module "loki_ec2" {
+  source = "./modules/ec2"
 
-#   image          = local.secret["container_image"]
-#   tag            = local.secret["container_tag"]
-#   container_name = local.secret["container_name"]
-#   docker_host_ip = module.docker_ec2.public_ip
+  ami           = data.aws_ami.prometheus_latest.id
+  instance_type = local.secret["instance_type"]
 
-#   ports = nonsensitive(local.secret["container_ports"])
-# }
+  sg_name   = local.secret["loki_sg_name"]
+  add_ports = nonsensitive(local.secret["loki_ports"])
+  icmp      = local.secret["loki_icmp"]
+  key_name  = aws_key_pair.tf-key-pair.key_name
+
+  tags = {
+    Name        = local.secret["loki_instance_name"]
+    Terraform   = true
+    Ansible     = true
+    Application = "loki"
+  }
+}
+
+module "grafana_ec2" {
+  source = "./modules/ec2"
+
+  ami           = data.aws_ami.prometheus_latest.id
+  instance_type = local.secret["instance_type"]
+
+  sg_name   = local.secret["grafana_sg_name"]
+  add_ports = nonsensitive(local.secret["grafana_ports"])
+  icmp      = local.secret["grafana_icmp"]
+  key_name  = aws_key_pair.tf-key-pair.key_name
+
+  tags = {
+    Name        = local.secret["grafana_instance_name"]
+    Terraform   = true
+    Ansible     = true
+    Application = "grafana"
+  }
+}
+
+module "apache_container" {
+  source = "./modules/docker"
+
+  image          = local.secret["apache_container_image"]
+  tag            = local.secret["apache_container_tag"]
+  container_name = local.secret["apache_container_name"]
+  docker_host_ip = module.docker_ec2.public_ip
+  loki_url       = "http://${module.loki_ec2.public_ip}:3100/loki/api/v1/push"
+
+  ports = nonsensitive(local.secret["apache_container_ports"])
+}
+
+module "goapp_container" {
+  source = "./modules/docker"
+
+  image          = local.secret["goapp_container_image"]
+  tag            = local.secret["goapp_container_tag"]
+  container_name = local.secret["goapp_container_name"]
+  docker_host_ip = module.docker_ec2.public_ip
+  loki_url       = "http://${module.loki_ec2.public_ip}:3100/loki/api/v1/push"
+  env            = nonsensitive(local.secret["goapp_container_envs"])
+
+  ports = nonsensitive(local.secret["goapp_container_ports"])
+}

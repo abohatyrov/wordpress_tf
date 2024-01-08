@@ -1,0 +1,12 @@
+---
+- name: Copy Grafana configuration
+  template:
+    src: my_grafana.ini.j2
+    dest: /etc/grafana/conf/custom.ini
+  notify: Restart Grafana service
+
+- name: Configure Grafana datasources
+  template:
+    src: datasources.yml.j2
+    dest: /etc/grafana/provisioning/datasources/datasources.yml
+  notify: Restart Grafana service

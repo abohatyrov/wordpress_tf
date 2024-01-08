@@ -1,0 +1,6 @@
+---
+- name: Set up Grafana as a service
+  template:
+    src: grafana.service.j2
+    dest: /etc/systemd/system/grafana.service
+  notify: Start Grafana service

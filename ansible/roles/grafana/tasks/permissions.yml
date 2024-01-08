@@ -1,0 +1,19 @@
+---
+- name: Create Grafana group
+  group:
+    name: grafana
+    state: present
+
+- name: Create Grafana user
+  user:
+    name: grafana
+    group: grafana
+    create_home: no
+    shell: /sbin/nologin
+    state: present
+
+- name: Add Grafana user to wheel group
+  user:
+    name: grafana
+    groups: wheel
+    append: yes

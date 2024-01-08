@@ -5,3 +5,12 @@
   roles:
     - prometheus
     - alert_manager
+    - promtail
+
+  vars:
+    jobs:
+    - job_name: "prometheus_logs"
+      config_type: "static"
+      target: "localhost"
+      job_label: "prometheus"
+      log_path: "/var/log/prometheus/*.log"

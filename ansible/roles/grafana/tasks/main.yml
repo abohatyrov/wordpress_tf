@@ -1,0 +1,37 @@
+---
+- name: Import Grafana GPG Key
+  rpm_key:
+    state: present
+    key: https://packages.grafana.com/gpg.key
+
+- name: Add Grafana repository
+  yum_repository:
+    name: grafana
+    description: Grafana Repository
+    baseurl: https://packages.grafana.com/oss/rpm
+    gpgcheck: yes
+
+- name: Install Grafana 9.4.2
+  yum:
+    name: grafana-9.4.2
+    state: present
+
+- name: Ensure Grafana is started and enabled on boot
+  systemd:
+    name: grafana-server
+    state: started
+    enabled: yes
+# - name: Set Permissions
+#   include_tasks: permissions.yml
+
+# - name: Create directories
+#   include_tasks: directories.yml
+
+# - name: Install Grafana
+#   include_tasks: install.yml
+
+# - name: Configure Grafana
+#   include_tasks: configure.yml
+
+# - name: Start Grafana service
+#   include_tasks: service.yml

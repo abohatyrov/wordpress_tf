@@ -1,0 +1,13 @@
+---
+- name: Start Loki service
+  systemd:
+    name: loki
+    state: started
+    enabled: yes
+    daemon_reload: yes
+
+- name: Restart Loki service
+  systemd:
+    name: loki
+    state: restarted
+    daemon_reload: yes

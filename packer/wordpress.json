@@ -6,7 +6,8 @@
       "ami_description": "An AMI with dependencies for Wordpress, based on RHEL.",
       "ami_name": "{{user `ami_name_prefix`}}-{{isotime | clean_resource_name}}",
       "instance_type": "t2.micro",
-      "region": "{{user `region`}}",
+      "region": "us-east-1",
+      "profile": "terraform",
       "source_ami_filter": {
           "filters": {
               "architecture": "x86_64",
